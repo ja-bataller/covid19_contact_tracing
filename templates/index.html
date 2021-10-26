@@ -1,0 +1,43 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Covid-19 Contact Tracing - XM Malls</title>
+    
+    <!-- Fontawesome CDN -->
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.13.1/css/all.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static '/css/index.css'%}">
+</head>
+</head>
+
+<body>
+    <div class="loader-container">
+        <i class="fas fa-shield-virus loader" style="color: #57CC99;"></i>
+    </div>
+    <h1 id="typingLoad"></h1>
+
+    <!--TYPEIT CDN -->
+    <script src="https://unpkg.com/typeit@8.0.1/dist/index.umd.js"></script>
+
+    <!-- TYPEIT init -->
+    <script>
+        new TypeIt("#typingLoad", {
+            strings: "Loading...",
+            speed: 200,
+        }).go();
+    </script>
+
+    <!-- Custom Scripts -->
+    <script>
+        setTimeout(function () { window.location.replace("/scan"); }, 3000);
+    </script>
+</body>
+
+</html>
