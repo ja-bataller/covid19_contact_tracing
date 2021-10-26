@@ -7,3 +7,6 @@ def index(request):
 
 def scan(request):
      return render(request, 'scan.html')
+
+def login_signup(request):
+     return render(request, 'login.html')
