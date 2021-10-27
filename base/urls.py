@@ -8,9 +8,8 @@ urlpatterns = [
 
     # ADMINS URLS
     path('admin_home/', views.admin_home, name="login"),
+    path('admin_users/', views.admin_users_dashboard, name="admin_users"),
     path('admin_user_info/', views.admin_user_info, name="admin_user_info"),
-    path('admin_active/', views.admin_active_dashboard, name="admin_active"),
-    path('admin_inactive/', views.admin_inactive_dashboard, name="admin_inactive"),
     path('admin_pui/', views.admin_pui_dashboard, name="admin_pui"),
     path('admin_about/', views.admin_about, name="admin_about"),
 

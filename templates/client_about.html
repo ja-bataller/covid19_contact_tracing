@@ -12,8 +12,8 @@
     <meta name="author" content="">
 
     <title>About - XM Malls</title>
-
-    {% include 'header.html' %}
+   
+ {% include 'header.html' %}
 
 </head>
 
@@ -24,58 +24,51 @@
 
         <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
             <!-- Sidebar - Brand -->
-            <a class="
-              sidebar-brand
-              d-flex
-              align-items-center
-              justify-content-center
-              mt-3
-              mb-4
-              " href="/admin_home">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center mt-3 mb-4"
+                href="/client_dashboard">
                 <div class="sidebar-brand-icon">
-                    <i class="fas fa-shield-virus fa-5x" style="color: #78d3ab"></i>
+                    <i class="fas fa-shield-virus fa-5x" style="color: #78d3ab;"></i>
                 </div>
                 <div class="sidebar-brand-text">Covid-19 Contact Tracing</div>
             </a>
+
             <!-- Divider -->
-            <hr class="sidebar-divider my-0" />
+            <hr class="sidebar-divider my-0">
+
             <!-- Nav Item - Dashboard -->
             <li class="nav-item">
-                <a class="nav-link" href="/admin_home">
+                <a class="nav-link" href="/client_dashboard">
                     <i class="fas fa-fw fa-columns"></i>
-                    <span>Home</span></a>
+                    <span>Dashboard</span></a>
             </li>
+
             <!-- Divider -->
-            <hr class="sidebar-divider" />
-            <!-- Heading -->
-            <div class="sidebar-heading">Dashboard</div>
-            <!-- Nav Item - All User Charts -->
+            <hr class="sidebar-divider my-0">
+
+            <!-- Nav Item - Contact Us -->
             <li class="nav-item">
-                <a class="nav-link" href="/admin_users">
-                    <i class="fas fa-users"></i>
-                    <span>Users</span></a>
+                <a class="nav-link" href="/client_contact">
+                    <i class="far fa-envelope"></i>
+                    <span>Contact Us</span></a>
             </li>
-            <!-- Nav Item - PUI Charts -->
-            <li class="nav-item">
-                <a class="nav-link" href="/admin_pui">
-                    <i class="fas fa-head-side-virus"></i>
-                    <span>PUI Users</span></a>
-            </li>
-            <!-- Divider -->
-            <hr class="sidebar-divider" />
+
             <!-- Nav Item - About -->
             <li class="nav-item active">
-                <a class="nav-link" href="/admin_about">
+                <a class="nav-link" href="/client_about">
                     <i class="fas fa-info-circle"></i>
                     <span>About</span></a>
             </li>
+
             <!-- Divider -->
-            <hr class="sidebar-divider d-none d-md-block" />
+            <hr class="sidebar-divider d-none d-md-block">
+
             <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
             </div>
+
         </ul>
         <!-- End of Sidebar -->
 
@@ -132,12 +125,6 @@
 
                     <div class="aboutDiv wow fadeInDown">
                         <div class="container">
-                            <h1 class="text-justify text-center">About Us</h1>
-                            <p class="text-justify text-center">
-                                Hello, We are BET-COET student of Technological University of the Philippines Cavite.
-                                 We built this Covid-19 Contact Tracing via QR Code Web App by using HTML, CSS, JavaScriptm Bootstrap, Django, PyMongo, MongoDB, and deployed in Heroku.
-                                <br> We hope you enjoy it and we're open for any feedbacks or comments. Thank you and have a nice day.
-                            </p>
                             <div class="row">
                                 <div class="col-12 col-sm-6 col-md-4 col-lg-4">
                                     <div class="our-team">
@@ -159,20 +146,19 @@
                                 <div class="col-12 col-sm-6 col-md-4 col-lg-4">
                                     <div class="our-team">
                                         <div class="picture">
-                                            <img class="img-fluid" src="{% static '/img/JABB.jpg' %}">
+                                            <img class="img-fluid" src="{% static 'img/JABB.jpg' %}">
                                         </div>
                                         <div class="team-content">
                                             <h3 class="name">John Anthony B. Bataller</h3>
                                             <h4 class="title">BET-COET 4th Year NS-4A</h4>
                                         </div>
                                         <ul class="social">
-                                            <li><a href="https://www.facebook.com/bataller.johnanthony/"
-                                                    class="fab fa-facebook" aria-hidden="true" target="_blank"></a></li>
+                                            <li><a href="https://www.facebook.com/bataller.johnanthony/" class="fab fa-facebook"
+                                                    aria-hidden="true" target="_blank"></a></li>
                                             <li><a href="https://github.com/ja-bataller" class="fab fa-github"
                                                     aria-hidden="true" target="_blank"></a></li>
-                                            <li><a href="https://johnanthonybataller.netlify.app/"
-                                                    class="fas fa-id-card-alt" aria-hidden="true" target="_blank"></a>
-                                            </li>
+                                            <li><a href="https://johnanthonybataller.netlify.app/" class="fas fa-id-card-alt"
+                                                    aria-hidden="true" target="_blank"></a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -188,8 +174,8 @@
                                         <ul class="social">
                                             <li><a href="https://www.facebook.com/marychrisjasa" class="fab fa-facebook"
                                                     aria-hidden="true" target="_blank"></a></li>
-                                            <li><a href="#" class="fab fa-github" aria-hidden="true"
-                                                    target="_blank"></a></li>
+                                            <li><a href="#" class="fab fa-github"
+                                                    aria-hidden="true" target="_blank"></a></li>
                                         </ul>
                                     </div>
                                 </div>

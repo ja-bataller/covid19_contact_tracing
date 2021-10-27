@@ -14,14 +14,11 @@ def login_signup(request):
 def admin_home(request):
      return render(request, 'admin_home.html')
 
+def admin_users_dashboard(request):
+     return render(request, 'admin_users_dashboard.html')
+     
 def admin_user_info(request):
      return render(request, 'admin_user_info.html')
-
-def admin_active_dashboard(request):
-     return render(request, 'admin_active_dashboard.html')
-
-def admin_inactive_dashboard(request):
-     return render(request, 'admin_inactive_dashboard.html')
 
 def admin_pui_dashboard(request):
      return render(request, 'admin_pui_dashboard.html')

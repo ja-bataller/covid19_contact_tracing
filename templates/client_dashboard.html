@@ -11,9 +11,9 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Active Dashboard - XM Malls</title>
+    <title>Dashboard - XM Malls</title>
 
-    {% include 'header.html'  %}
+    {% include 'header.html' %}
 
 </head>
 
@@ -27,7 +27,7 @@
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center mt-3 mb-4"
-                href="/admin_home">
+                href="/client_dashboard">
                 <div class="sidebar-brand-icon">
                     <i class="fas fa-shield-virus fa-5x" style="color: #78d3ab;"></i>
                 </div>
@@ -38,47 +38,25 @@
             <hr class="sidebar-divider my-0">
 
             <!-- Nav Item - Dashboard -->
-            <li class="nav-item">
-                <a class="nav-link" href="/admin_home">
-                    <i class="fas fa-fw fa-columns"></i>
-                    <span>Home</span></a>
-            </li>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Dashboard
-            </div>
-
-            <!-- Nav Item - Active Charts -->
             <li class="nav-item active">
-                <a class="nav-link" href="/admin_active">
-                    <i class="fas fa-user-check"></i>
-                    <span>Active Users</span></a>
-            </li>
-
-            <!-- Nav Item - Inactive Charts -->
-            <li class="nav-item">
-                <a class="nav-link" href="/admin_inactive">
-                    <i class="fas fa-user-times"></i>
-                    <span>Inactive Users</span></a>
-            </li>
-
-            <!-- Nav Item - PUI Charts -->
-            <li class="nav-item">
-                <a class="nav-link" href="/admin_pui">
-                    <i class="fas fa-head-side-virus"></i>
-                    <span>PUI Users</span></a>
+                <a class="nav-link" href="/client_dashboard">
+                    <i class="fas fa-fw fa-columns"></i>
+                    <span>Dashboard</span></a>
             </li>
 
             <!-- Divider -->
-            <hr class="sidebar-divider">
+            <hr class="sidebar-divider my-0">
+
+            <!-- Nav Item - Contact Us -->
+            <li class="nav-item">
+                <a class="nav-link" href="/client_contact">
+                    <i class="far fa-envelope"></i>
+                    <span>Contact Us</span></a>
+            </li>
 
             <!-- Nav Item - About -->
             <li class="nav-item">
-                <a class="nav-link" href="/admin_about">
+                <a class="nav-link" href="/client_about">
                     <i class="fas fa-info-circle"></i>
                     <span>About</span></a>
             </li>
@@ -146,7 +124,7 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Active User Dashboard</h1>
+                    <h1 class="h3 mb-2 text-gray-800">Hi John!</h1>
 
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
@@ -155,8 +133,6 @@
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>Contact No.</th>
-                                            <th>Name</th>
                                             <th>Branch</th>
                                             <th>Store</th>
                                             <th>Date</th>
@@ -166,8 +142,6 @@
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                            <th>Contact No.</th>
-                                            <th>Name</th>
                                             <th>Branch</th>
                                             <th>Store</th>
                                             <th>Date</th>
@@ -177,9 +151,7 @@
                                     </tfoot>
                                     <tbody>
                                         <tr>
-                                            <td><a href="/admin_user_info" style="color: #1597E5; text-decoration: none;">09691432619</a></td>
-                                            <td>John Anthony Bataller</td>
-                                            <td>Manila</td>
+                                            <td>XM Mall Manila</td>
                                             <td>National Bookstore</td>
                                             <th>October 11, 2021</th>
                                             <td>10:03 AM</td>
