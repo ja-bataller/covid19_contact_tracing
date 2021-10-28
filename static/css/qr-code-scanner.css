@@ -7,8 +7,8 @@
   @import url('https://fonts.googleapis.com/css2?family=Caveat&display=swap');
 
   :root {
-    --card-height: 50vh;
-    --card-width: 50vh;
+    --card-height: 40vh;
+    --card-width: 40vh;
   }
   
   body {
@@ -26,7 +26,7 @@
 
 .title {
   font-family: 'Caveat', cursive;
-  font-size: 6em;
+  font-size: 5em;
   color: #63768b;
 }
 
@@ -127,3 +127,16 @@
     opacity: 1;
   }
   
+  .videoContainer{
+    width: 250px;
+    height: 250px;
+    text-align: center;
+    overflow: hidden;
+   
+  }
+  #qr-video{
+    margin-left: -210px;
+    margin-top: -50px;
+    object-fit: cover;
+    border-radius: 10px;
+  }

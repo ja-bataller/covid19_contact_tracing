@@ -24,27 +24,43 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{% static '/css/qr-code-scanner.css'%}">
     <link rel="stylesheet" href="{% static '/css/animate.css'%}">
+    <link rel="stylesheet" href="{% static '/css/spinner.css'%}">
 </head>
 
 <body>
     <div class="mt-3 mb-4">
-        <h1 class="title wow fadeInDown">Welcome to XM Malls</h1>
+        <h1 class="title wow fadeInDown">Welcome to XM Malls <br> Manila
+        </h1>
     </div>
 
     <div>
-        <div class="qrCard wow fadeIn">
-            <h1 style="color: white;">QR CODE SCANNER</h1>
+        <div class="qrCard wow fadeInDown">
+            <div class="videoContainer wow fadeInDown p-3">
+
+                <!-- Spinner Start -->
+                <div id="scannerSpinner" class="loader" style="display: none;">
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                </div>
+                <!-- Spinner End -->
+
+                <!-- QR Code Scanner Start -->
+                <video id="qr-video" width="640" height="460"></video>
+                <!-- QR Code Scanner End -->
+            </div>
         </div>
-    
+
         <div class="mt-5 mb-3 wow fadeInUp">
             <select class="form-select form-select-lg mb-3">
                 <option selected>Choose Location here</option>
-                <option value="1">Main Entrance</option>
-                <option value="2">Wing A Entrance</option>
-                <option value="3">Wing B Entrance</option>
-                <option value="3">Parking Entrance</option>
-                <option value="3">Mc'Donalds</option>
-                <option value="3">Jollibee</option>
+                <option value="MainEntrance">Main Entrance</option>
+                <option value="WingAEntrance">Wing A Entrance</option>
+                <option value="WingBEntrance">Wing B Entrance</option>
+                <option value="ParkingEntrance">Parking Entrance</option>
+                <option value="NationalBookstore">National Bookstore - UGF/GF/FF, MAIN BUILDING</option>
             </select>
         </div>
     </div>
@@ -52,7 +68,7 @@
     <a href="/login" class="float wow bounceInUp">
         <i class="fas fa-user my-float"></i>
     </a>
-    
+
     <div class="label-container">
         <div class="label-text">Login here</div>
         <i class="fa fa-play label-arrow"></i>
@@ -64,6 +80,40 @@
     <!-- WOW.js init -->
     <script>
         new WOW().init();
+    </script>
+
+    <script type="module">
+        import QrScanner from "{% static '/js/qr-scanner.min.js'%}";
+        QrScanner.WORKER_PATH = "{% static '/js/qr-scanner-worker.min.js'%}";
+
+        const video = document.getElementById('qr-video');
+        const camHasCamera = document.getElementById('cam-has-camera');
+        const camQrResult = document.getElementById('cam-qr-result');
+
+        async function setResult(label, result) {
+
+            const idnumber = result;
+            console.log(idnumber);
+
+            console.log("Stop Web Cam");
+            scanner.stop();
+
+            setTimeout(function () {
+                document.getElementById("scannerSpinner").style.display = "block";
+            }, 500);
+
+            setTimeout(function () {
+                document.getElementById("scannerSpinner").style.display = "none";
+                console.log("Start Web Cam Again");
+                scanner.start();
+            }, 3000);
+
+        }
+
+        const scanner = new QrScanner(video, result => setResult(camQrResult, result), error => {
+            console.log("Scanning");
+        });
+        scanner.start();
     </script>
 </body>
 
