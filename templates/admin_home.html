@@ -79,57 +79,15 @@
          <!-- Main Content -->
          <div id="content">
 
-            <!-- Topbar -->
-            <nav class="
-                  navbar navbar-expand navbar-light
-                  bg-white
-                  topbar
-                  mb-4
-                  static-top
-                  shadow
-                  ">
-               <!-- Sidebar Toggle (Topbar) -->
-               <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                  <i class="fa fa-bars"></i>
-               </button>
-               <!-- Topbar Navbar -->
-               <ul class="navbar-nav ml-auto">
-                  <div class="topbar-divider d-none d-sm-block"></div>
-                  <!-- Nav Item - User Information -->
-                  <li class="nav-item dropdown no-arrow">
-                     <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false">
-                        <span class="mr-2 d-none d-lg-inline text-gray-600 small">John Anthony Bataller</span>
-                        <img class="img-profile rounded-circle" src="{% static '/img/undraw_profile.svg' %}" />
-                     </a>
-                     <!-- Dropdown - User Information -->
-                     <div class="
-                           dropdown-menu dropdown-menu-right
-                           shadow
-                           animated--grow-in
-                           " aria-labelledby="userDropdown">
-                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#accountsettingsModal">
-                           <i class="fas fa-user-cog fa-sm fa-fw mr-2 text-gray-400"></i>
-                           Account Settings
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                           <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                           Logout
-                        </a>
-                     </div>
-                  </li>
-               </ul>
-            </nav>
-            <!-- End of Topbar -->
+            {% include 'topbar.html' %}
 
             <!-- Begin Page Content -->
             <div class="container-fluid">
 
                <div class="row">
 
-                  
-                  <!-- User Count -->
+
+                  <!-- Active User Count -->
                   <div class="col-xl-4 col-md-12 mb-4 mb-3">
 
                      <div class="card border-left-success shadow py-4 mb-3">
@@ -145,7 +103,7 @@
                                     Active Users
                                  </div>
                                  <div class="h1 mb-0 font-weight-bold text-gray-800">
-                                    5,391
+                                    {{active_user_count}}
                                  </div>
                               </div>
                               <div class="col-auto">
@@ -173,7 +131,7 @@
                                     Users
                                  </div>
                                  <div class="h1 mb-0 font-weight-bold text-gray-800">
-                                    6,279
+                                    {{user_count}}
                                  </div>
                               </div>
                               <div class="col-auto">
@@ -185,7 +143,7 @@
 
                   </div>
 
-                  <!-- User Count -->
+                  <!-- PUI User Count -->
                   <div class="col-xl-4 col-md-12 mb-4 mb-3">
 
                      <div class="card border-left-danger shadow py-4 mb-3">
@@ -209,7 +167,7 @@
                                              font-weight-bold
                                              text-gray-800
                                              ">
-                                          34
+                                          {{pui_user_count}}
                                        </div>
                                     </div>
                                  </div>
@@ -258,7 +216,7 @@
                                     </tr>
                                  </tfoot>
                                  <tbody>
-                                    <tr>
+                                    <!-- <tr>
                                        <td>
                                           <a href="/admin_user_info"
                                              style="color: #1597e5; text-decoration: none">09691432619</a>
@@ -270,7 +228,7 @@
                                        <th>October 14, 2021</th>
                                        <td>10:03 AM</td>
                                        <td>10:48 AM</td>
-                                    </tr>
+                                    </tr> -->
                                  </tbody>
                               </table>
                            </div>
@@ -281,6 +239,12 @@
                </div>
             </div>
             <!-- /.container-fluid -->
+
+            <div id="qrcodegeneratedImage" class="QRcodeImage" style="display: none;"></div>
+            <span id="idnumber" style="display: none;">{{client_id}}</span>
+            <span id="fullNameofUser" class="hideContent" data-filename="{{client_name}}"
+               style="display: none;">{{client_name}}</span>
+
          </div>
          <!-- End of Main Content -->
 

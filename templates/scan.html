@@ -56,24 +56,40 @@
             <!-- QR Code Scanner Start -->
             <video id="qr-video" width="640" height="460"></video>
             <!-- QR Code Scanner End -->
+
+            
         </div>
     </div>
 
+ 
+
     <div class="mt-5 mb-3 wow fadeInUp">
-        <select class="form-select form-select-lg mb-3">
-            <option selected>Choose Location here</option>
-            <option value="MainEntrance">Main Entrance</option>
-            <option value="WingAEntrance">Wing A Entrance</option>
-            <option value="WingBEntrance">Wing B Entrance</option>
-            <option value="ParkingEntrance">Parking Entrance</option>
-            <option value="AceHardware">Ace Hardware - 2nd floor, MAIN BUILDING</option>
-            <option value="BookSale">Book Sale - Low Ground, MAIN BUILDING</option>
-            <option value="Jollibee">Jollibee - Low Ground, MAIN BUILDING</option>
-            <option value="Mcdonalds">McDonald's - UGF/GF/FF, MAIN BUILDING</option>
-            <option value="NationalBookstore">National Bookstore - UGF/GF/FF, MAIN BUILDING</option>
-            <option value="OfficeWarehouse">Office Warehouse - Low Ground, MAIN BUILDING</option>
-            <option value="XMHypermarket">XM Hypermaket - Low Ground, MAIN BUILDING</option>
-        </select>
+        <form id="entranceForm" method="POST" action=""> 
+            {% csrf_token %}
+            <div class="input-group flex-nowrap mb-4" style="display: none;">
+                <div class="input-group-prepend">
+                <span class="input-group-text" id="addon-wrapping"><i class="fas fa-user-circle fa-2x"></i></span>
+                </div>
+                <input type="text" id="scanned_id" name="scanned_id" class="form-control" aria-label="id_number" aria-describedby="addon-wrapping">
+            </div>
+
+            <select id="location" class="form-select form-select-lg mb-3" name="location">
+                <option id="default" value="default" selected>Choose Location here</option>
+                <option value="Mall Main Entrance">Main Entrance</option>
+                <option value="Mall Wing A Entrance">Wing A Entrance</option>
+                <option value="Mall WingBEntrance">Wing B Entrance</option>
+                <option value="Mall ParkingEntrance">Parking Entrance</option>
+                <option value="AceHardware">Ace Hardware - 2nd floor, MAIN BUILDING</option>
+                <option value="BookSale">Book Sale - Low Ground, MAIN BUILDING</option>
+                <option value="Jollibee">Jollibee - Low Ground, MAIN BUILDING</option>
+                <option value="Mcdonalds">McDonald's - UGF/GF/FF, MAIN BUILDING</option>
+                <option value="NationalBookstore">National Bookstore - UGF/GF/FF, MAIN BUILDING</option>
+                <option value="OfficeWarehouse">Office Warehouse - Low Ground, MAIN BUILDING</option>
+                <option value="XMHypermarket">XM Hypermaket - Low Ground, MAIN BUILDING</option>
+            </select>
+
+            <button id="submitBtn" type="submit" class="btn btn-outline-success w-100" style="display: none;">Submit</button>
+         </form>
     </div>
 
     <a href="/login" class="float wow bounceInUp">
@@ -85,6 +101,10 @@
         <i class="fa fa-play label-arrow"></i>
     </div>
 
+    <audio id="welcomeAudio">
+        <source src="{% static 'welcome.mp3' %}" type="audio/mpeg">
+    </audio>
+
     <!-- WOW.js -->
     <script src="{% static '/js/wow.min.js'%}"></script>
 
@@ -92,6 +112,10 @@
     <script>
         new WOW().init();
     </script>
+
+    <script   script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js" integrity="sha512-Zq9o+E00xhhR/7vJ49mxFNJ0KQw1E1TMWkPTxrWcnpfEFDEXgUiwJHIKit93EW/XxE31HSI5GEOW06G6BF1AtA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css" integrity="sha512-O03ntXoVqaGUTAeAmvQ2YSzkCvclZEcPQu1eqloPaHfJ5RuNGiS4l+3duaidD801P50J28EHyonCV06CUlTSag==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 
     <!-- QR Code Scanner -->
     <script type="module">
@@ -102,23 +126,72 @@
         const camHasCamera = document.getElementById('cam-has-camera');
         const camQrResult = document.getElementById('cam-qr-result');
 
+        let scanned_id = document.querySelector("#scanned_id")
+        let location = document.querySelector("#location")
+        let entranceForm = document.querySelector('#entranceForm')
+
+        let welcomeAudio = document.querySelector("#welcomeAudio"); 
+
         async function setResult(label, result) {
 
             const idnumber = result;
+            scanned_id.value = idnumber
             console.log(idnumber);
 
             console.log("Stop Web Cam");
             scanner.stop();
+
+            if (location.value == "default") {
+                iziToast.error({
+                title: "Invalid",
+                message: "Please select your current location.",
+                position: "topCenter",
+                timeout: 3000,
+            });
 
             setTimeout(function () {
                 document.getElementById("scannerSpinner").style.display = "block";
             }, 500);
 
             setTimeout(function () {
+                scanned_id.value = ""
+                document.getElementById("default").selected = "true";
+
                 document.getElementById("scannerSpinner").style.display = "none";
                 console.log("Start Web Cam Again");
                 scanner.start();
             }, 3000);
+
+            }
+
+            else {
+                if (location.value == "MainEntrance" || location.value == "WingAEntrance" || location.value == "WingBEntrance" || location.value == "ParkingEntrance"){
+                    document.getElementById("scannerSpinner").style.display = "block";
+                    welcomeAudio.play()
+
+                    setTimeout(function () {
+                        entranceForm.submit()
+                    }, 1800);
+                } 
+                else {
+                    document.getElementById("scannerSpinner").style.display = "block";
+                    entranceForm.submit()
+                }
+            }
+
+        
+            // setTimeout(function () {
+            //     document.getElementById("scannerSpinner").style.display = "block";
+            // }, 500);
+
+            // setTimeout(function () {
+            //     scanned_id.value = ""
+            //     document.getElementById("default").selected = "true";
+
+            //     document.getElementById("scannerSpinner").style.display = "none";
+            //     console.log("Start Web Cam Again");
+            //     scanner.start();
+            // }, 3000);
 
         }
 

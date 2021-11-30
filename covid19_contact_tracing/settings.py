@@ -77,11 +77,25 @@ WSGI_APPLICATION = 'covid19_contact_tracing.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
+
+# MongoDB Connection using Djongo
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+        'default': {
+            'ENGINE': 'djongo',
+            'NAME': 'covid19-contact-tracing',
+            'ENFORCE_SCHEMA': False,
+            'CLIENT': {
+                'host': 'mongodb+srv://admin:admin@cluster0.hjpjl.mongodb.net/covid19-contact-tracing?retryWrites=true&w=majority'
+            }  
+        }
 }
 
 

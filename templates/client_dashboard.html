@@ -96,12 +96,17 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">John Anthony Bataller</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ client_name }}</span>
                                 <img class="img-profile rounded-circle" src="{% static '/img/undraw_profile.svg' %}">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
+                                <a id="downloadImageBtn" class="dropdown-item" href="#">
+                                    <i class="fas fa-qrcode fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Download QR Code
+                                </a>
+                                <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#" data-toggle="modal"
                                     data-target="#accountsettingsModal">
                                     <i class="fas fa-user-cog fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -124,7 +129,7 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Hi John!</h1>
+                    <h1 class="h3 mb-2 text-gray-800" id="greetings">Hi </h1>
 
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
@@ -132,19 +137,17 @@
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
-                                    <tr>
-                                        <th>Branch</th>
-                                        <th>Store</th>
-                                        <th>Location</th>
-                                        <th>Date</th>
-                                        <th>Time-in</th>
-                                        <th>Time-out</th>
-                                    </tr>
+                                        <tr>
+                                            <th>Branch</th>
+                                            <th>Store</th>
+                                            <th>Location</th>
+                                            <th>Date</th>
+                                            <th>Time-in</th>
+                                            <th>Time-out</th>
+                                        </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
-
-
                                             <th>Branch</th>
                                             <th>Store</th>
                                             <th>Location</th>
@@ -154,14 +157,14 @@
                                         </tr>
                                     </tfoot>
                                     <tbody>
-                                        <tr>
+                                        <!-- <tr>
                                             <td>Manila</td>
                                             <td>National Bookstore</td>
                                             <td>UGF/GF/FF, MAIN BUILDING</td>
                                             <th>October 14, 2021</th>
                                             <td>10:03 AM</td>
                                             <td>10:48 AM</td>
-                                        </tr>
+                                        </tr> -->
                                     </tbody>
                                 </table>
                             </div>
@@ -170,6 +173,10 @@
 
                 </div>
                 <!-- /.container-fluid -->
+
+                <div id="qrcodegeneratedImage" class="QRcodeImage" style="display: none;"></div>
+                <span id="idnumber" style="display: none;">{{client_id}}</span>
+                <span id="fullNameofUser" class="hideContent" data-filename="" style="display: none;"></span>
 
             </div>
             <!-- End of Main Content -->
@@ -188,7 +195,7 @@
         <!-- End of Content Wrapper -->
 
     </div>
-    <!-- End of Page Wrapper -->
+    <!-- End of Page Wrappser -->
 
     {% include 'footer.html' %}
 
