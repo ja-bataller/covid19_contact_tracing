@@ -197,10 +197,8 @@
                                        <th>Name</th>
                                        <th>Branch</th>
                                        <th>Store</th>
-                                       <th>Location</th>
                                        <th>Date</th>
                                        <th>Time-in</th>
-                                       <th>Time-out</th>
                                     </tr>
                                  </thead>
                                  <tfoot>
@@ -209,26 +207,24 @@
                                        <th>Name</th>
                                        <th>Branch</th>
                                        <th>Store</th>
-                                       <th>Location</th>
                                        <th>Date</th>
                                        <th>Time-in</th>
-                                       <th>Time-out</th>
                                     </tr>
                                  </tfoot>
                                  <tbody>
-                                    <!-- <tr>
+                                    {% for active in active_today %}
+                                    <tr>
                                        <td>
-                                          <a href="/admin_user_info"
-                                             style="color: #1597e5; text-decoration: none">09691432619</a>
+                                         <a href="{% url 'admin_user_info' active.contact_number %}"
+                                             style="color: #1597E5; text-decoration: none;">{{active.contact_number}}</a>
                                        </td>
-                                       <td>John Anthony Bataller</td>
-                                       <td>Manila</td>
-                                       <td>National Bookstre</td>
-                                       <td>UGF/GF/FF, MAIN BUILDING</td>
-                                       <th>October 14, 2021</th>
-                                       <td>10:03 AM</td>
-                                       <td>10:48 AM</td>
-                                    </tr> -->
+                                       <td>{{active.full_name}}</td>
+                                       <td>{{active.branch}}</td>
+                                       <td>{{active.location}}</td>
+                                       <th>{{active.date}}</th>
+                                       <td>{{active.time_in}}</td>
+                                    </tr>
+                                    {% endfor %}
                                  </tbody>
                               </table>
                            </div>

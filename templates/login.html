@@ -98,6 +98,17 @@
 
    {% include 'footer.html' %}
 
+   {% if response == 'change password' %}
+   <script>
+      iziToast.success({
+            title: "Updated",
+            message: "The password has been updated successfully. Please re-login again.",
+            position: "topCenter",
+            timeout: 3000,
+        });
+   </script>
+   {% endif %}
+
    <!-- Validation Alert -->
    {% if response == 'not_found' %}
    <script>

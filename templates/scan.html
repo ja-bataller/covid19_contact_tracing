@@ -77,15 +77,15 @@
                 <option id="default" value="default" selected>Choose Location here</option>
                 <option value="Mall Main Entrance">Main Entrance</option>
                 <option value="Mall Wing A Entrance">Wing A Entrance</option>
-                <option value="Mall WingBEntrance">Wing B Entrance</option>
-                <option value="Mall ParkingEntrance">Parking Entrance</option>
-                <option value="AceHardware">Ace Hardware - 2nd floor, MAIN BUILDING</option>
-                <option value="BookSale">Book Sale - Low Ground, MAIN BUILDING</option>
-                <option value="Jollibee">Jollibee - Low Ground, MAIN BUILDING</option>
-                <option value="Mcdonalds">McDonald's - UGF/GF/FF, MAIN BUILDING</option>
-                <option value="NationalBookstore">National Bookstore - UGF/GF/FF, MAIN BUILDING</option>
-                <option value="OfficeWarehouse">Office Warehouse - Low Ground, MAIN BUILDING</option>
-                <option value="XMHypermarket">XM Hypermaket - Low Ground, MAIN BUILDING</option>
+                <option value="Mall Wing B Entrance">Wing B Entrance</option>
+                <option value="Mall Parking Entrance">Parking Entrance</option>
+                <option value="Ace Hardware - 2nd floor, MAIN BUILDING">Ace Hardware - 2nd floor, MAIN BUILDING</option>
+                <option value="Book Sale - Low Ground, MAIN BUILDING">Book Sale - Low Ground, MAIN BUILDING</option>
+                <option value="Jollibee - Low Ground, MAIN BUILDING">Jollibee - Low Ground, MAIN BUILDING</option>
+                <option value="McDonald's - UGF/GF/FF, MAIN BUILDING">McDonald's - UGF/GF/FF, MAIN BUILDING</option>
+                <option value="National Bookstore - UGF/GF/FF, MAIN BUILDING">National Bookstore - UGF/GF/FF, MAIN BUILDING</option>
+                <option value="Office Warehouse - Low Ground, MAIN BUILDING">Office Warehouse - Low Ground, MAIN BUILDING</option>
+                <option value="XM Hypermaket - Low Ground, MAIN BUILDING">XM Hypermaket - Low Ground, MAIN BUILDING</option>
             </select>
 
             <button id="submitBtn" type="submit" class="btn btn-outline-success w-100" style="display: none;">Submit</button>
@@ -165,17 +165,19 @@
             }
 
             else {
-                if (location.value == "MainEntrance" || location.value == "WingAEntrance" || location.value == "WingBEntrance" || location.value == "ParkingEntrance"){
+                if (location.value == "Mall Main Entrance" || location.value == "Mall Wing A Entrance" || location.value == "Mall Wing B Entrance" || location.value == "Mall Parking Entrance"){
                     document.getElementById("scannerSpinner").style.display = "block";
                     welcomeAudio.play()
 
                     setTimeout(function () {
                         entranceForm.submit()
-                    }, 1800);
+                    }, 2200);
                 } 
                 else {
                     document.getElementById("scannerSpinner").style.display = "block";
-                    entranceForm.submit()
+                    setTimeout(function () {
+                        entranceForm.submit()
+                    }, 1000);
                 }
             }
 
