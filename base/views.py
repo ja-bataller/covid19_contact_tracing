@@ -139,7 +139,7 @@ def signup_page(request):
 
             if user is not None:
                 login(request, user)
-                return redirect('client_dashboard')
+                return redirect('login')
             else:
                 print("Error: Not Logged-in")
 

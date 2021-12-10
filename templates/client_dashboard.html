@@ -78,52 +78,7 @@
             <!-- Main Content -->
             <div id="content">
 
-                <!-- Topbar -->
-                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
-                    <!-- Sidebar Toggle (Topbar) -->
-                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                        <i class="fa fa-bars"></i>
-                    </button>
-
-
-                    <!-- Topbar Navbar -->
-                    <ul class="navbar-nav ml-auto">
-
-                        <div class="topbar-divider d-none d-sm-block"></div>
-
-                        <!-- Nav Item - User Information -->
-                        <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ client_name }}</span>
-                                <img class="img-profile rounded-circle" src="{% static '/img/undraw_profile.svg' %}">
-                            </a>
-                            <!-- Dropdown - User Information -->
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="userDropdown">
-                                <a id="downloadImageBtn" class="dropdown-item" href="#">
-                                    <i class="fas fa-qrcode fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Download QR Code
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal"
-                                    data-target="#accountsettingsModal">
-                                    <i class="fas fa-user-cog fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Account Settings
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Logout
-                                </a>
-                            </div>
-                        </li>
-
-                    </ul>
-
-                </nav>
-                <!-- End of Topbar -->
+                {% include 'topbar.html' %}
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
@@ -140,31 +95,19 @@
                                         <tr>
                                             <th>Branch</th>
                                             <th>Store</th>
-                                            <th>Location</th>
                                             <th>Date</th>
                                             <th>Time-in</th>
-                                            <th>Time-out</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
                                             <th>Branch</th>
                                             <th>Store</th>
-                                            <th>Location</th>
                                             <th>Date</th>
                                             <th>Time-in</th>
-                                            <th>Time-out</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
-                                        <!-- <tr>
-                                            <td>Manila</td>
-                                            <td>National Bookstore</td>
-                                            <td>UGF/GF/FF, MAIN BUILDING</td>
-                                            <th>October 14, 2021</th>
-                                            <td>10:03 AM</td>
-                                            <td>10:48 AM</td>
-                                        </tr> -->
                                     </tbody>
                                 </table>
                             </div>
