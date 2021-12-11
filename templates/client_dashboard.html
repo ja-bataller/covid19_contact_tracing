@@ -108,6 +108,14 @@
                                         </tr>
                                     </tfoot>
                                     <tbody>
+                                        {% for user in user_log %}
+                                        <tr>
+                                            <td>{{user.branch}}</td>
+                                            <td>{{user.location}}</td>
+                                            <td>{{user.date}}</td>
+                                            <td>{{user.time_in}}</td>
+                                        </tr>
+                                        {% endfor %}
                                     </tbody>
                                 </table>
                             </div>

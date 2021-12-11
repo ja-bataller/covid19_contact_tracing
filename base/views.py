@@ -418,12 +418,38 @@ def client_error(request):
 @staff_member_required(login_url='client_error')
 def client_dashboard(request):
     current_user = request.user
+    currentpassword = request.user.password
+
     user_info = UserAccount.objects.get(contact_number=current_user)
+
+    user_log = UserLogs.objects.filter(contact_number=current_user).filter(branch="Manila")
 
     client_name = user_info.full_name
     client_id = user_info.contact_number
 
-    context = {'client_name': client_name, 'client_id': client_id}
+    if request.method == 'POST':
+        oldClientPassword = request.POST.get('oldClientPassword')
+        newClientPassword = request.POST.get('newClientPassword')
+
+        match_check = check_password(oldClientPassword, currentpassword)
+
+        if match_check:
+
+            UserAccount.objects.filter(contact_number=current_user).update(
+                password=newClientPassword)
+
+            acc_change = User.objects.get(username=client_id)
+            acc_change.set_password(newClientPassword)
+            acc_change.save()
+
+            context = {'client_name': client_name, 'client_id': client_id, 'user_log': user_log, 'response': 'password changed'}
+            return render(request, 'client_dashboard.html', context)
+
+        else:
+            context = {'client_name': client_name, 'client_id': client_id, 'user_log': user_log, 'response': 'password mismatch'}
+            return render(request, 'client_dashboard.html', context)
+
+    context = {'client_name': client_name, 'client_id': client_id, 'user_log': user_log}
 
     return render(request, 'client_dashboard.html', context)
 
@@ -432,10 +458,34 @@ def client_dashboard(request):
 @staff_member_required(login_url='client_error')
 def client_contact(request):
     current_user = request.user
+    currentpassword = request.user.password
+
     user_info = UserAccount.objects.get(contact_number=current_user)
 
     client_name = user_info.full_name
     client_id = user_info.contact_number
+
+    if request.method == 'POST':
+        oldClientPassword = request.POST.get('oldClientPassword')
+        newClientPassword = request.POST.get('newClientPassword')
+
+        match_check = check_password(oldClientPassword, currentpassword)
+
+        if match_check:
+
+            UserAccount.objects.filter(contact_number=current_user).update(
+                password=newClientPassword)
+
+            acc_change = User.objects.get(username=client_id)
+            acc_change.set_password(newClientPassword)
+            acc_change.save()
+
+            context = {'client_name': client_name, 'client_id': client_id, 'response': 'password changed'}
+            return render(request, 'client_contact.html', context)
+
+        else:
+            context = {'client_name': client_name, 'client_id': client_id, 'response': 'password mismatch'}
+            return render(request, 'client_contact.html', context)
 
     context = {'client_name': client_name, 'client_id': client_id}
 
@@ -446,10 +496,34 @@ def client_contact(request):
 @staff_member_required(login_url='client_error')
 def client_about(request):
     current_user = request.user
+    currentpassword = request.user.password
+
     user_info = UserAccount.objects.get(contact_number=current_user)
 
     client_name = user_info.full_name
     client_id = user_info.contact_number
+
+    if request.method == 'POST':
+        oldClientPassword = request.POST.get('oldClientPassword')
+        newClientPassword = request.POST.get('newClientPassword')
+
+        match_check = check_password(oldClientPassword, currentpassword)
+
+        if match_check:
+
+            UserAccount.objects.filter(contact_number=current_user).update(
+                password=newClientPassword)
+
+            acc_change = User.objects.get(username=client_id)
+            acc_change.set_password(newClientPassword)
+            acc_change.save()
+
+            context = {'client_name': client_name, 'client_id': client_id, 'response': 'password changed'}
+            return render(request, 'client_about.html', context)
+
+        else:
+            context = {'client_name': client_name, 'client_id': client_id, 'response': 'password mismatch'}
+            return render(request, 'client_about.html', context)
 
     context = {'client_name': client_name, 'client_id': client_id}
 
