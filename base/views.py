@@ -417,19 +417,43 @@ def client_error(request):
 @login_required(login_url='login')
 @staff_member_required(login_url='client_error')
 def client_dashboard(request):
-    return render(request, 'client_dashboard.html')
+    current_user = request.user
+    user_info = UserAccount.objects.get(contact_number=current_user)
+
+    client_name = user_info.full_name
+    client_id = user_info.contact_number
+
+    context = {'client_name': client_name, 'client_id': client_id}
+
+    return render(request, 'client_dashboard.html', context)
 
 
 @login_required(login_url='login')
 @staff_member_required(login_url='client_error')
 def client_contact(request):
-    return render(request, 'client_contact.html')
+    current_user = request.user
+    user_info = UserAccount.objects.get(contact_number=current_user)
+
+    client_name = user_info.full_name
+    client_id = user_info.contact_number
+
+    context = {'client_name': client_name, 'client_id': client_id}
+
+    return render(request, 'client_contact.html', context)
 
 
 @login_required(login_url='login')
 @staff_member_required(login_url='client_error')
 def client_about(request):
-    return render(request, 'client_about.html')
+    current_user = request.user
+    user_info = UserAccount.objects.get(contact_number=current_user)
+
+    client_name = user_info.full_name
+    client_id = user_info.contact_number
+
+    context = {'client_name': client_name, 'client_id': client_id}
+
+    return render(request, 'client_about.html', context)
 
 
 @login_required(login_url='login')
