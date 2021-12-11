@@ -284,7 +284,7 @@ def admin_user_info(request, id):
         gender = user.gender
 
         context = {'user_info': user, 'gender': gender,
-                   'client_name': client_name, 'client_id': client_id}
+                   'client_name': client_name, 'client_id': client_id, 'response': "success"}
 
         return render(request, 'admin_user_info.html', context)
 
