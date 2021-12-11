@@ -173,6 +173,10 @@
             oldClientPassword.value = ""
             newClientPassword.value = ""
             confirmClientPassword.value = ""
+            save_changes_btn.style.display = "block";
+            save_changes_spinner.style.display = "none";
+            cancel_btn.removeAttribute("disabled");
+
 
         } else {
             change_password_form.submit();
