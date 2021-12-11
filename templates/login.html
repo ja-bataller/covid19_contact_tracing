@@ -67,14 +67,19 @@
 
          {% else %}
 
-         <div class="user signinBx">
+         <div class="user signinBx" onsubmit="signupBtnSpinner()">
             <div class="imgBx"><img src="{% static '/img/wash.jpg' %}" alt="" /></div>
             <div class="formBx">
-               <form method="POST">
+               <form method="POST" >
                   <h2 class="pt-">Create an account</h2>
                   {% csrf_token %}
                   {{form}}
-                  <input type="submit" name="" value="Sign Up" />
+                  <input id="signupBtn" type="submit" name="" value="Sign Up" />
+                  <button id="signupSpinner" class="btn form-control btn-primary" type="button" style="display: none;"
+                     disabled>
+                     <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                     Signing up...
+                  </button>
                   <p class="signup text-center">
                      Already have an account ?
                      <a href="{% url 'login' %}" style="color: #FF95C5;">Log in.</a>
@@ -248,6 +253,16 @@
       }
    </script>
 
+   <!-- Signup Spinner -->
+   <script>
+      let signupBtn = document.querySelector("#signupBtn")
+      let signupSpinner = document.querySelector("#signupSpinner")
+
+      function signupBtnSpinner() {
+         signupBtn.style.display = "none";
+         signupSpinner.style.display = "block";
+      }
+   </script>
 </body>
 
 </html>
