@@ -257,6 +257,8 @@ def admin_user_info(request, id):
     user = UserAccount.objects.get(contact_number=id)
     gender = user.gender
 
+    user_history = UserLogs.objects.filter(contact_number = id)
+
     if request.method == 'POST':
         # gender = request.POST.get('contact_number')
         full_name = request.POST.get('full_name')
@@ -284,14 +286,33 @@ def admin_user_info(request, id):
         gender = user.gender
 
         context = {'user_info': user, 'gender': gender,
-                   'client_name': client_name, 'client_id': client_id, 'response': "success"}
+                   'client_name': client_name, 'client_id': client_id, 'user_history': user_history, 'response': "success"}
 
         return render(request, 'admin_user_info.html', context)
 
+    if user.status == "pui":
+        context = {'user_info': user, 'gender': gender,
+               'client_name': client_name, 'client_id': client_id, 'user_history': user_history, 'response': "pui"}
+
+        return render(request, 'admin_user_info.html', context)
+    
     context = {'user_info': user, 'gender': gender,
-               'client_name': client_name, 'client_id': client_id}
+            'client_name': client_name, 'client_id': client_id, 'user_history': user_history, 'response': "active"}
 
     return render(request, 'admin_user_info.html', context)
+
+
+@login_required(login_url='login')
+@user_passes_test(lambda u: u.is_superuser, login_url='admin_error')
+def admin_user_pui(request, id):
+    UserAccount.objects.filter(contact_number=id).update(status="pui")
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+
+@login_required(login_url='login')
+@user_passes_test(lambda u: u.is_superuser, login_url='admin_error')
+def admin_user_active(request, id):
+    UserAccount.objects.filter(contact_number=id).update(status="active")
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
 
 @login_required(login_url='login')
@@ -304,6 +325,8 @@ def admin_pui_dashboard(request):
 
     client_name = user_info.full_name
     client_id = user_info.contact_number
+
+    pui_user = UserAccount.objects.filter(status = "pui")
 
     if request.method == 'POST':
         oldClientPassword = request.POST.get('oldClientPassword')
@@ -320,14 +343,14 @@ def admin_pui_dashboard(request):
             acc_change.set_password(newClientPassword)
             acc_change.save()
 
-            context = {'client_name': client_name, 'client_id': client_id, 'response': 'password changed'}
+            context = {'client_name': client_name, 'client_id': client_id, 'response': 'password changed', 'pui_user' : pui_user}
             return render(request, 'admin_pui_dashboard.html', context)
 
         else:
-            context = {'client_name': client_name, 'client_id': client_id, 'response': 'password mismatch'}
+            context = {'client_name': client_name, 'client_id': client_id, 'response': 'password mismatch', 'pui_user' : pui_user}
             return render(request, 'admin_pui_dashboard.html', context)
 
-    context = {'client_name': client_name, 'client_id': client_id}
+    context = {'client_name': client_name, 'client_id': client_id, 'pui_user' : pui_user}
     return render(request, 'admin_pui_dashboard.html', context)
 
 

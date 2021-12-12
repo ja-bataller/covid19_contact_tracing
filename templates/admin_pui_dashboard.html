@@ -60,7 +60,7 @@
             <!-- Nav Item - PUI Charts -->
             <li class="nav-item active">
                 <a class="nav-link" href="/admin_pui">
-                    <i class="fas fa-head-side-virus"></i>
+                    <i class="fas fa-head-side-mask"></i>
                     <span>PUI Users</span></a>
             </li>
             <!-- Divider -->
@@ -103,28 +103,32 @@
                                         <tr>
                                             <th>Contact No.</th>
                                             <th>Name</th>
-                                            <th>Branch</th>
-                                            <th>Store</th>
-                                            <th>Location</th>
-                                            <th>Date</th>
-                                            <th>Time-in</th>
-                                            <th>Time-out</th>
-                                            <th>Action</th>
+                                            <th>Gender</th>
+                                            <th>Home Address</th>
+                                            <th>Email Address</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
                                             <th>Contact No.</th>
                                             <th>Name</th>
-                                            <th>Branch</th>
-                                            <th>Store</th>
-                                            <th>Location</th>
-                                            <th>Date</th>
-                                            <th>Time-in</th>
-                                            <th>Time-out</th>
-                                            <th>Action</th>
+                                            <th>Gender</th>
+                                            <th>Home Address</th>
+                                            <th>Email Address</th>
                                         </tr>
                                     </tfoot>
+                                    <tbody>
+                                        {% for user in pui_user %}
+                                        <tr>
+                                            <td><a href="{% url 'admin_user_info' user.contact_number %}"
+                                                    style="color: #1597E5; text-decoration: none;">{{user.contact_number}}</a></td>
+                                            <td>{{user.full_name}}</td>
+                                            <td>{{user.gender}}</td>
+                                            <td>{{user.home_address}}</td>
+                                            <td>{{user.email_address}}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
                                 </table>
                             </div>
                         </div>

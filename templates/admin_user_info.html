@@ -60,7 +60,7 @@
             <!-- Nav Item - PUI Charts -->
             <li class="nav-item">
                 <a class="nav-link" href="/admin_pui">
-                    <i class="fas fa-head-side-virus"></i>
+                    <i class="fas fa-head-side-mask"></i>
                     <span>PUI Users</span></a>
             </li>
             <!-- Divider -->
@@ -129,12 +129,18 @@
                     <div class="row">
                         <!-- Border Left Utilities -->
                         <div class="col-lg-12">
+
                             <a class="btn  btn-secondary mb-3" href="/admin_users" role="button"><i
                                     class="fas fa-arrow-left"></i></a>
                             <!-- <button type="button" id="deleteBtn" class="btn btn-danger mb-3 floatRight"
                                 data-toggle="modal" data-target="#deleteModal"><i class="fa fa-trash"></i></button> -->
-                            <a role="button" class="btn btn-warning mb-3 mr-2 floatRight"><i
-                                    class="fas fa-head-side-mask"></i></a>
+                            {% if response != "pui" %}
+                            <a href="#" data-toggle="modal" data-target="#puiModal"
+                                class="btn btn-warning mb-3 mr-2 floatRight"><i class="fas fa-head-side-mask"></i></a>
+                            {% else %}
+                            <a href="#" data-toggle="modal" data-target="#activeModal"
+                                class="btn btn-info mb-3 mr-2 floatRight"><i class="fas fa-child"></i></a>
+                            {% endif %}
                             <div class="card my-1 mb-5 border-left-secondary">
                                 <div class="card-header">
                                     <h4 class="mt-2">
@@ -255,43 +261,30 @@
                                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                             <thead>
                                                 <tr>
-                                                    <th>Contact No.</th>
-                                                    <th>Name</th>
                                                     <th>Branch</th>
-                                                    <th>Store</th>
                                                     <th>Location</th>
                                                     <th>Date</th>
                                                     <th>Time-in</th>
-                                                    <th>Time-out</th>
                                                 </tr>
                                             </thead>
                                             <tfoot>
                                                 <tr>
-                                                    <th>Contact No.</th>
-                                                    <th>Name</th>
                                                     <th>Branch</th>
-                                                    <th>Store</th>
                                                     <th>Location</th>
                                                     <th>Date</th>
                                                     <th>Time-in</th>
-                                                    <th>Time-out</th>
                                                 </tr>
                                             </tfoot>
-                                            <!-- <tbody>
+                                            <tbody>
+                                                {% for user in user_history %}
                                                 <tr>
-                                                    <td>
-                                                        <a href="/admin_user_info"
-                                                            style="color: #1597e5; text-decoration: none">09691432619</a>
-                                                    </td>
-                                                    <td>John Anthony Bataller</td>
-                                                    <td>Manila</td>
-                                                    <td>National Bookstore</td>
-                                                    <td>UGF/GF/FF, MAIN BUILDING</td>
-                                                    <th>October 14, 2021</th>
-                                                    <td>10:03 AM</td>
-                                                    <td>10:48 AM</td>
+                                                    <td>{{user.branch}}</td>
+                                                    <td>{{user.location}}</td>
+                                                    <td>{{user.date}}</td>
+                                                    <td>{{user.time_in}}</td>
                                                 </tr>
-                                            </tbody> -->
+                                                {% endfor %}
+                                            </tbody>
                                         </table>
                                     </div>
                                 </div>
@@ -304,6 +297,60 @@
                     <span id="idnumber" style="display: none;">{{client_id}}</span>
                     <span id="fullNameofUser" class="hideContent" data-filename="{{client_name}}"
                         style="display: none;">{{client_name}}</span>
+
+                    <!-- PUI Modal-->
+                    <div class="modal fade" id="puiModal" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static"
+                        data-keyboard="false">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">PUI User?</h5>
+                                </div>
+                                <div class="modal-body">Are you sure you want to mark this user as PUI?</div>
+                                <div class="modal-footer">
+                                    <button id="cancelPuiBtn" class="btn btn-secondary" type="button"
+                                        data-dismiss="modal">Cancel</button>
+                                    <a id="puiBtn" class="btn" href="{% url 'admin_user_pui' user_info.contact_number %}""
+                                        style="background-color: #ffc107; color: white;">Yes</a>
+
+                                    <button id="puiSpinner" class="btn" type="button"
+                                        style="background-color: #ffc107; color: white; display: none;" disabled>
+                                        <span class="spinner-border spinner-border-sm" role="status"
+                                            aria-hidden="true"></span>
+                                        updating...
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Active Modal-->
+                    <div class="modal fade" id="activeModal" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static"
+                        data-keyboard="false">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Active User?</h5>
+                                </div>
+                                <div class="modal-body">Are you sure you want to mark this user as Active?</div>
+                                <div class="modal-footer">
+                                    <button id="cancelPuiBtn" class="btn btn-secondary" type="button"
+                                        data-dismiss="modal">Cancel</button>
+                                    <a id="puiBtn" class="btn" href="{% url 'admin_user_active' user_info.contact_number %}""
+                                        style="background-color: #07a4ff; color: white;">Yes</a>
+
+                                    <button id="puiSpinner" class="btn" type="button"
+                                        style="background-color: #07a4ff; color: white; display: none;" disabled>
+                                        <span class="spinner-border spinner-border-sm" role="status"
+                                            aria-hidden="true"></span>
+                                        updating...
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                 </div>
                 <!-- End of Main Content -->
@@ -380,6 +427,28 @@
                 message: "The User information has been updated successfully",
                 position: "topCenter",
                 timeout: 3000,
+            });
+        </script>
+        {% endif %}
+
+        {% if response == 'pui' %}
+        <script>
+            iziToast.warning({
+                title: "ALERT",
+                message: "This User is a PUI user.",
+                position: "topCenter",
+                timeout: 5000,
+            });
+        </script>
+        {% endif %}
+
+        {% if response == 'active' %}
+        <script>
+            iziToast.success({
+                title: "Hurray!",
+                message: "This User is now an active user. ",
+                position: "topCenter",
+                timeout: 5000,
             });
         </script>
         {% endif %}
