@@ -134,39 +134,65 @@
                                 <div class="col-md-8">
                                     <div class="contact-page-form" method="post">
                                         <h1 class="wow fadeInLeft" style="color: #455361;">Get in Touch</h1>
-                                        <form action="contact-mail.php" method="post">
+                                        <form id="contactUsForm">
                                             <div class="row">
                                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                                    <div class="single-input-field wow fadeInLeft">
-                                                        <input type="text" placeholder="Your Name" name="name"
-                                                            required />
+                                                    <div class="single-input-field wow fadeInLeft input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text" id="basic-addon1"><i
+                                                                    class="fas fa-user"></i></span>
+                                                        </div>
+                                                        <input id="name" class="form-control" type="text" disabled
+                                                            placeholder="{{client_name}}" value="{{client_name}}"
+                                                            name="name" required />
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                                    <div class="single-input-field wow fadeInLeft">
-                                                        <input type="email" placeholder="E-mail" name="email"
-                                                            required />
+                                                    <div class="single-input-field wow fadeInLeft input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text" id="basic-addon1"><i
+                                                                    class="far fa-envelope"></i></span>
+                                                        </div>
+                                                        <input id="email" class="form-control" type="email" disabled
+                                                            placeholder="{{client_email}}" value="{{client_email}}"
+                                                            name="email" required />
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                                    <div class="single-input-field wow fadeInLeft">
-                                                        <input type="text" placeholder="Phone Number" name="phone"
-                                                            required />
+                                                    <div class="single-input-field wow fadeInLeft input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text" id="basic-addon1"><i
+                                                                    class="fas fa-mobile-alt"></i></span>
+                                                        </div>
+                                                        <input id="contact_number" class="form-control" type="text"
+                                                            disabled placeholder="{{client_id}}" value="{{client_id}}"
+                                                            name="phone" required />
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                                    <div class="single-input-field wow fadeInLeft">
-                                                        <input type="text" placeholder="Subject" name="subject"
-                                                            required />
+                                                    <div class="single-input-field wow fadeInLeft input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <label class="input-group-text"
+                                                                for="inputGroupSelect01">Subject</label>
+                                                        </div>
+                                                        <select class="custom-select" id="subject">
+                                                            <option id="default" value="default" selected>Choose...
+                                                            </option>
+                                                            <option value="Change Mobile Number">Change Mobile Number
+                                                            </option>
+                                                            <option value="Account Issue">Account Issue</option>
+                                                        </select>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12 message-input">
                                                     <div class="single-input-field wow fadeInLeft">
-                                                        <textarea placeholder="Write Your Message"
+                                                        <textarea id="message" placeholder="Write Your Message"
                                                             name="message"></textarea>
-                                                        <button id="sendBtn" type="submit"
+
+                                                        <button id="sendEmailBtn" type="submit"
                                                             class="wow fadeInLeft mt-2 btn btn-lg btn-outline-dark"
-                                                            style="width: 100%;">SEND</button>
+                                                            style="width: 100%;"> SEND                                            
+                                                        </button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -189,7 +215,8 @@
 
                 <div id="qrcodegeneratedImage" class="QRcodeImage" style="display: none;"></div>
                 <span id="idnumber" style="display: none;">{{client_id}}</span>
-                <span id="fullNameofUser" class="hideContent" data-filename="{{client_name}}" style="display: none;">{{client_name}}</span>
+                <span id="fullNameofUser" class="hideContent" data-filename="{{client_name}}"
+                    style="display: none;">{{client_name}}</span>
 
             </div>
             <!-- End of Main Content -->
@@ -211,6 +238,63 @@
     <!-- End of Page Wrapper -->
 
     {% include 'footer.html' %}
+
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Email.js -->
+    <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/emailjs-com@2/dist/email.min.js'></script>
+    <script type='text/javascript'>(function () { emailjs.init('user_NoFcwBgkEKzAzkTAHTnci'); })();</script>
+
+    <script>
+        const contactUsForm = document.querySelector("#contactUsForm");
+        const name = document.querySelector('#name').value;
+        const email = document.querySelector('#email').value;
+        const contact_number = document.querySelector('#contact_number').value;
+        const def_subject = document.querySelector('#default').value;
+        const subject = document.querySelector('#subject');
+        const message = document.querySelector("#message")
+
+        const sendEmailBtn = document.querySelector("#sendEmailBtn")
+
+        if (contactUsForm) {
+            contactUsForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                if (subject.value == 'default') {
+                    document.querySelector("#message").value = '';
+
+                    iziToast.error({
+                        title: "Invalid",
+                        message: "Please choose Subject of Email.",
+                        position: "topCenter",
+                        timeout: 5000,
+                    });
+
+                    return
+                }
+
+                let templateParams = {
+                    email: email,
+                    name: name,
+                    to_name: 'johnanthonybataller.ce@gmail.com',
+                    subject: subject.value,
+                    message: message.value
+                };
+
+                emailjs.send('jdbt', 'Online_CV', templateParams)
+                    .then(function (response) {
+                        Swal.fire('Success', 'Your message has been sent successfully.', 'success')
+                        document.querySelector("#subject").value = 'default';
+                        document.querySelector("#message").value = '';
+
+                    }, function (err) {
+                        Swal.fire('Error', 'Server error.', 'error')
+                        document.querySelector("#subject").value = 'default';
+                        document.querySelector("#message").value = '';
+                    });
+            });
+        }
+    </script>
 
 </body>
 

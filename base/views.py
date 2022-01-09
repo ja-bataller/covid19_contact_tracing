@@ -1,7 +1,7 @@
 from typing import ContextManager
 from django.forms.widgets import PasswordInput
 from django.shortcuts import render, redirect
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, response
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required, user_passes_test
@@ -28,18 +28,23 @@ def scan(request):
         time_today = datetime.datetime.today().strftime("%I:%M %p")
 
         try:
-            user_status = UserAccount.objects.get(
-                contact_number=contact_number)
+            user_status = UserAccount.objects.get(contact_number=contact_number)
 
-            time_in = UserLogs(full_name=user_status.full_name, contact_number=contact_number,
-                               branch="Manila", date=date_today, location=store, time_in=time_today)
-            time_in.save()
+            if user_status.status == "active":
 
-            return render(request, 'scan.html')
+                time_in = UserLogs(full_name=user_status.full_name, contact_number=contact_number,
+                                branch="Manila", date=date_today, location=store, time_in=time_today)
+                time_in.save()
+
+                return render(request, 'scan.html')
+
+            else:
+                print("Alert - User is a PUI user.")
+                return render(request, 'scan.html', {"response" : "pui"})
 
         except:
             print("Error - User not found.")
-            return render(request, 'scan.html')
+            return render(request, 'scan.html', {"response" : "unknown"})
 
         # print("User name:", user_status.full_name)
         # print("ID:", contact_number)
@@ -494,6 +499,7 @@ def client_contact(request):
 
     client_name = user_info.full_name
     client_id = user_info.contact_number
+    client_email = user_info.email_address
 
     if request.method == 'POST':
         oldClientPassword = request.POST.get('oldClientPassword')
@@ -517,7 +523,7 @@ def client_contact(request):
             context = {'client_name': client_name, 'client_id': client_id, 'response': 'password mismatch'}
             return render(request, 'client_contact.html', context)
 
-    context = {'client_name': client_name, 'client_id': client_id}
+    context = {'client_name': client_name, 'client_id': client_id, 'client_email': client_email}
 
     return render(request, 'client_contact.html', context)
 
