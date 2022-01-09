@@ -165,8 +165,9 @@ def logout_user(request):
 
 
 # ADMINS VIEW
-
-@login_required(login_url='login')
+@sync_to_async
+@login_required(login_url='/login/')
+@async_to_sync
 @user_passes_test(lambda u: u.is_superuser, login_url='admin_error')
 async def admin_home(request):
     current_user = request.user
