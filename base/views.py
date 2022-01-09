@@ -13,6 +13,10 @@ from .forms import SignUpForm
 
 import datetime
 
+import os
+
+os.environ["DJANGO_ALLOW_ASYNC_UNSAFE"] = "true"
+
 
 def index(request):
     return render(request, 'index.html')
