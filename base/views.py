@@ -116,7 +116,7 @@ async def login_page(request):
                 return render(request, 'login.html', context)
 
     context = {'page': page}
-    return await render(request, 'login.html', context)
+    return render(request, 'login.html', context)
 
 
 def signup_page(request):
@@ -206,7 +206,7 @@ async def admin_home(request):
 
     context = {'client_name': client_name, 'client_id': client_id, 'user_count': user_count,
                'active_user_count': active_user_count, 'pui_user_count': pui_user_count, 'active_today': active_today}
-    return await render(request, 'admin_home.html', context)
+    return render(request, 'admin_home.html', context)
 
 
 @login_required(login_url='login')
