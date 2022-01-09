@@ -14,7 +14,7 @@ from .forms import SignUpForm
 
 import datetime
 
-from asgiref.sync import sync_to_async
+from asgiref.sync import AsyncToSync, sync_to_async
 from asgiref.sync import async_to_sync
 
 
@@ -79,7 +79,7 @@ def createSuperUser(username, password, email, firstName="", lastName=""):
     return user
 
 
-def login_page(request):
+async def login_page(request):
     page = 'login'
 
     if request.method == 'POST':
@@ -87,7 +87,7 @@ def login_page(request):
         password = request.POST.get('password')
 
         try:
-            user = sync_to_async (User.objects.get)(username=contact_number)
+            user = async_to_sync (User.objects.get)(username=contact_number)
         except:
             context = {'page': page, 'response': "not_found"}
             return render(request, 'login.html', context)
@@ -165,26 +165,24 @@ def logout_user(request):
 
 
 # ADMINS VIEW
-@sync_to_async
 @login_required(login_url='/login/')
-@async_to_sync
 @user_passes_test(lambda u: u.is_superuser, login_url='admin_error')
 async def admin_home(request):
     current_user = request.user
     currentpassword = request.user.password
 
-    user_info = await UserAccount.objects.get(contact_number=current_user)
+    user_info = UserAccount.objects.get(contact_number=current_user)
 
     date_today = datetime.datetime.today().strftime('%m/%d/%Y')
 
-    active_today = await UserLogs.objects.filter(date=date_today)
+    active_today = UserLogs.objects.filter(date=date_today)
 
     client_name = user_info.full_name
     client_id = user_info.contact_number
 
-    user_count = await UserAccount.objects.all().count()
-    active_user_count = await active_today.count()
-    pui_user_count = await UserAccount.objects.filter(status='pui').count()
+    user_count =  UserAccount.objects.all().count()
+    active_user_count =  active_today.count()
+    pui_user_count =  UserAccount.objects.filter(status='pui').count()
 
     if request.method == 'POST':
         oldClientPassword = request.POST.get('oldClientPassword')
