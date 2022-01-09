@@ -97,7 +97,8 @@ DATABASES = {
             'NAME': 'covid19-contact-tracing',
             'ENFORCE_SCHEMA': False,
             'CLIENT': {
-                'host': 'mongodb+srv://admin:admin@cluster0.hjpjl.mongodb.net/covid19-contact-tracing?retryWrites=true&w=majority'
+                'host': 'mongodb+srv://admin:admin@cluster0.hjpjl.mongodb.net/covid19-contact-tracing?retryWrites=true&w=majority',
+                'authMechanism': 'SCRAM-SHA-1'
             }  
         }
 }
