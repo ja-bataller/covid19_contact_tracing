@@ -1,0 +1,142 @@
+@property --rotate {
+    syntax: "<angle>";
+    initial-value: 132deg;
+    inherits: false;
+  }
+
+  @import url('https://fonts.googleapis.com/css2?family=Caveat&display=swap');
+
+  :root {
+    --card-height: 40vh;
+    --card-width: 40vh;
+  }
+  
+  body {
+    font-family: 'Open Sans', sans-serif;
+    background:white;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    min-height: 100vh;
+  }
+
+.title {
+  font-family: 'Caveat', cursive;
+  font-size: 5em;
+  color: #63768b;
+}
+
+
+.qrCard {
+    background: #6D8299;
+    width: var(--card-width);
+    height: var(--card-height);
+    padding: 3px;
+    position: relative;
+    border-radius: 6px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    display: flex;
+    font-size: 1.5em;
+    color: rgb(88 199 250 / 0%);
+  }
+  
+.qrCard::before {
+    content: "";
+    width: 104%;
+    height: 104%;
+    border-radius: 8px;
+    background-image: linear-gradient(
+      var(--rotate),
+      #C1FFD7,
+      #B5DEFF 43%,
+      #CAB8FF
+    );
+    position: absolute;
+    z-index: -1;
+    top: -2%;
+    left: -2%;
+    animation: spin 2.5s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% {
+      --rotate: 0deg;
+    }
+    100% {
+      --rotate: 360deg;
+    }
+  }
+
+  .label-container{
+    position:fixed;
+    bottom:48px;
+    right:105px;
+    display:table;
+    visibility: hidden;
+  }
+  
+  .label-text{
+    color:#FFF;
+    background:#6D8299;
+    display:table-cell;
+    vertical-align:middle;
+    padding:10px;
+    border-radius:3px;
+  }
+  
+  .label-arrow{
+    display:table-cell;
+    vertical-align:middle;
+    color:#6D8299;
+    opacity:0.5;
+  }
+  
+  .float{
+    position:fixed;
+    width:60px;
+    height:60px;
+    bottom:40px;
+    right:40px;
+    background-color:#6886C5;
+    color:#FFF;
+    border-radius:50px;
+    text-align:center;
+    box-shadow: 2px 2px 3px #999;
+  }
+  
+  .my-float{
+    font-size:24px;
+    margin-top:18px;
+    color:#FFF;
+  }
+  
+  a.float + div.label-container {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.5s ease;
+  }
+  
+  a.float:hover + div.label-container{
+    visibility: visible;
+    opacity: 1;
+  }
+  
+  .videoContainer{
+    width: 250px;
+    height: 250px;
+    text-align: center;
+    overflow: hidden;
+   
+  }
+  #qr-video{
+    margin-left: -210px;
+    margin-top: -50px;
+    object-fit: cover;
+    border-radius: 10px;
+  }
