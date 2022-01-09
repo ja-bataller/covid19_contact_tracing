@@ -209,7 +209,7 @@ async def admin_home(request):
 
     context = {'client_name': client_name, 'client_id': client_id, 'user_count': user_count,
                'active_user_count': active_user_count, 'pui_user_count': pui_user_count, 'active_today': active_today}
-    return render(request, 'admin_home.html', context)
+    return await render(request, 'admin_home.html', context)
 
 
 @login_required(login_url='login')
