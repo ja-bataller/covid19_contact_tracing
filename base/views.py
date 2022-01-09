@@ -79,7 +79,7 @@ def createSuperUser(username, password, email, firstName="", lastName=""):
     return user
 
 
-async def login_page(request):
+def login_page(request):
     page = 'login'
 
     if request.method == 'POST':
@@ -87,7 +87,7 @@ async def login_page(request):
         password = request.POST.get('password')
 
         try:
-            user = await sync_to_async (User.objects.get, thread_sensitive=True)(username=contact_number)
+            user = sync_to_async (User.objects.get)(username=contact_number)
         except:
             context = {'page': page, 'response': "not_found"}
             return render(request, 'login.html', context)
