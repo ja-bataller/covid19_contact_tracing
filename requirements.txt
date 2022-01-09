@@ -1,8 +1,6 @@
 django
 gunicorn
 django-heroku
-pymongo
-pymongo[srv]
 djongo
 pytz
 django-crispy-forms
