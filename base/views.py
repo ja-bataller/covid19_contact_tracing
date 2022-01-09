@@ -14,9 +14,6 @@ from .forms import SignUpForm
 
 import datetime
 
-from asgiref.sync import AsyncToSync, sync_to_async
-from asgiref.sync import async_to_sync
-
 
 def index(request):
     return render(request, 'index.html')
@@ -87,7 +84,7 @@ async def login_page(request):
         password = request.POST.get('password')
 
         try:
-            user = async_to_sync (User.objects.get(username=contact_number))
+            user = await (User.objects.get(username=contact_number))
         except:
             context = {'page': page, 'response': "not_found"}
             return render(request, 'login.html', context)
@@ -119,7 +116,7 @@ async def login_page(request):
                 return render(request, 'login.html', context)
 
     context = {'page': page}
-    return render(request, 'login.html', context)
+    return await render(request, 'login.html', context)
 
 
 def signup_page(request):
@@ -171,18 +168,18 @@ async def admin_home(request):
     current_user = request.user
     currentpassword = request.user.password
 
-    user_info = async_to_sync (UserAccount.objects.get(contact_number=current_user))
+    user_info = (UserAccount.objects.get(contact_number=current_user))
 
     date_today = datetime.datetime.today().strftime('%m/%d/%Y')
 
-    active_today = async_to_sync (UserLogs.objects.filter(date=date_today))
+    active_today = (UserLogs.objects.filter(date=date_today))
 
     client_name = user_info.full_name
     client_id = user_info.contact_number
 
-    user_count =  async_to_sync (UserAccount.objects.all().count())
-    active_user_count =  async_to_sync (active_today.count())
-    pui_user_count =  async_to_sync (UserAccount.objects.filter(status='pui').count())
+    user_count =  (UserAccount.objects.all().count())
+    active_user_count =  (active_today.count())
+    pui_user_count =  (UserAccount.objects.filter(status='pui').count())
 
     if request.method == 'POST':
         oldClientPassword = request.POST.get('oldClientPassword')
