@@ -5,3 +5,6 @@ pymongo
 pymongo[srv]
 djongo
 pytz
+django-crispy-forms
+dnspython
+sqlparse
