@@ -13,6 +13,7 @@ from .forms import SignUpForm
 
 import datetime
 
+from asgiref.sync import sync_to_async
 
 def index(request):
     return render(request, 'index.html')
@@ -83,7 +84,7 @@ async def login_page(request):
         password = request.POST.get('password')
 
         try:
-            user = await User.objects.get(username=contact_number)
+            user = await sync_to_async (User.objects.get(username=contact_number), thread_sensitive=True)
         except:
             context = {'page': page, 'response': "not_found"}
             return render(request, 'login.html', context)
