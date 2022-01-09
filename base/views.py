@@ -1,4 +1,5 @@
 from typing import ContextManager
+from asyncio.tasks import shield
 from django.forms.widgets import PasswordInput
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect, response
@@ -13,7 +14,8 @@ from .forms import SignUpForm
 
 import datetime
 
-from asgiref.sync import async_to_sync
+import asyncio
+
 
 def index(request):
     return render(request, 'index.html')
@@ -84,7 +86,7 @@ async def login_page(request):
         password = request.POST.get('password')
 
         try:
-            user = await async_to_sync (User.objects.get(username=contact_number), thread_sensitive=True)
+            user = await shield (User.objects.get(username=contact_number))
         except:
             context = {'page': page, 'response': "not_found"}
             return render(request, 'login.html', context)
