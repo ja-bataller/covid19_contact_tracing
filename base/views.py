@@ -13,9 +13,7 @@ from .forms import SignUpForm
 
 import datetime
 
-import os
-
-os.environ["DJANGO_ALLOW_ASYNC_UNSAFE"] = "true"
+from asgiref.sync import sync_to_async
 
 
 def index(request):
@@ -79,7 +77,7 @@ def createSuperUser(username, password, email, firstName="", lastName=""):
     return user
 
 
-def login_page(request):
+async def login_page(request):
     page = 'login'
 
     if request.method == 'POST':
@@ -87,7 +85,7 @@ def login_page(request):
         password = request.POST.get('password')
 
         try:
-            user = User.objects.get(username=contact_number)
+            user = await sync_to_async (User.objects.get(username=contact_number))
         except:
             context = {'page': page, 'response': "not_found"}
             return render(request, 'login.html', context)
