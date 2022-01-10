@@ -167,17 +167,17 @@ def logout_user(request):
 @user_passes_test(lambda u: u.is_superuser, login_url='admin_error')
 @async_to_sync
 async def admin_home(request):
-    current_user = request.user
-    currentpassword = request.user.password
+    current_user = async_to_sync (request.user)
+    currentpassword = async_to_sync (request.user.password)
 
     user_info = async_to_sync (UserAccount.objects.get(contact_number=current_user))
 
-    date_today = datetime.datetime.today().strftime('%m/%d/%Y')
+    date_today = async_to_sync (datetime.datetime.today().strftime('%m/%d/%Y'))
 
     active_today = async_to_sync (UserLogs.objects.filter(date=date_today))
 
-    client_name = user_info.full_name
-    client_id = user_info.contact_number
+    client_name = async_to_sync (user_info.full_name)
+    client_id = async_to_sync (user_info.contact_number)
 
     user_count =  async_to_sync (UserAccount.objects.all().count())
     active_user_count =  async_to_sync (active_today.count())
