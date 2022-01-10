@@ -14,8 +14,6 @@ from .forms import SignUpForm
 
 import datetime
 
-from asgiref.sync import sync_to_async
-from asgiref.sync import async_to_sync
 import asyncio
 
 def index(request):
@@ -86,7 +84,7 @@ async def login_page(request):
         password =  request.POST.get('password')
 
         try:
-            user = await User.objects.get(username=contact_number)
+            user = await asyncio.gather(User.objects.get(username=contact_number))
         except:
             context = {'page': page, 'response': "not_found"}
             return render(request, 'login.html', context)
@@ -167,22 +165,22 @@ def logout_user(request):
 @login_required(login_url='/login/')
 @user_passes_test(lambda u: u.is_superuser, login_url='admin_error')
 
-async def admin_home(request):
-    current_user = sync_to_async (request.user)
-    currentpassword = sync_to_async (request.user.password)
+def admin_home(request):
+    current_user = (request.user)
+    currentpassword = (request.user.password)
 
-    user_info = sync_to_async (UserAccount.objects.get(contact_number=current_user))
+    user_info = (UserAccount.objects.get(contact_number=current_user))
 
-    date_today = sync_to_async (datetime.datetime.today().strftime('%m/%d/%Y'))
+    date_today = (datetime.datetime.today().strftime('%m/%d/%Y'))
 
-    active_today = sync_to_async (UserLogs.objects.filter(date=date_today))
+    active_today = (UserLogs.objects.filter(date=date_today))
 
-    client_name = sync_to_async (user_info.full_name)
-    client_id = sync_to_async (user_info.contact_number)
+    client_name = (user_info.full_name)
+    client_id = (user_info.contact_number)
 
-    user_count =  sync_to_async (UserAccount.objects.all().count())
-    active_user_count =  sync_to_async (active_today.count())
-    pui_user_count =  sync_to_async (UserAccount.objects.filter(status='pui').count())
+    user_count =  (UserAccount.objects.all().count())
+    active_user_count =  (active_today.count())
+    pui_user_count =  (UserAccount.objects.filter(status='pui').count())
 
     if request.method == 'POST':
         oldClientPassword = request.POST.get('oldClientPassword')
