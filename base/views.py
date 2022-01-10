@@ -76,13 +76,13 @@ def createSuperUser(username, password, email, firstName="", lastName=""):
 
     return user
 
-
+@async_to_sync
 async def login_page(request):
     page = 'login'
 
     if request.method == 'POST':
-        contact_number = request.POST.get('contact_number')
-        password = request.POST.get('password')
+        contact_number = async_to_sync (request.POST.get('contact_number'))
+        password = async_to_sync (request.POST.get('password'))
 
         try:
             user = async_to_sync (User.objects.get(username=contact_number))
