@@ -81,8 +81,8 @@ async def login_page(request):
     page = 'login'
 
     if request.method == 'POST':
-        contact_number = sync_to_async (request.POST.get('contact_number'))
-        password = sync_to_async (request.POST.get('password'))
+        contact_number =  request.POST.get('contact_number')
+        password =  request.POST.get('password')
 
         try:
             user = sync_to_async (User.objects.get(username=contact_number))
