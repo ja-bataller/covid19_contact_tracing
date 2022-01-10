@@ -14,7 +14,8 @@ from .forms import SignUpForm
 
 import datetime
 
-from asgiref.sync import async_to_sync
+from asgiref.sync import sync_to_async
+from asgiref.sync import sync_to_async
 
 def index(request):
     return render(request, 'index.html')
@@ -76,21 +77,20 @@ def createSuperUser(username, password, email, firstName="", lastName=""):
 
     return user
 
-@async_to_sync
 async def login_page(request):
     page = 'login'
 
     if request.method == 'POST':
-        contact_number = async_to_sync (request.POST.get('contact_number'))
-        password = async_to_sync (request.POST.get('password'))
+        contact_number = sync_to_async (request.POST.get('contact_number'))
+        password = sync_to_async (request.POST.get('password'))
 
         try:
-            user = async_to_sync (User.objects.get(username=contact_number))
+            user = sync_to_async (User.objects.get(username=contact_number))
         except:
             context = {'page': page, 'response': "not_found"}
             return render(request, 'login.html', context)
 
-        user = async_to_sync (authenticate(
+        user = sync_to_async (authenticate(
             request, username=contact_number, password=password))
 
         if user is None:
@@ -165,23 +165,23 @@ def logout_user(request):
 # ADMINS VIEW
 @login_required(login_url='/login/')
 @user_passes_test(lambda u: u.is_superuser, login_url='admin_error')
-@async_to_sync
+
 async def admin_home(request):
-    current_user = async_to_sync (request.user)
-    currentpassword = async_to_sync (request.user.password)
+    current_user = sync_to_async (request.user)
+    currentpassword = sync_to_async (request.user.password)
 
-    user_info = async_to_sync (UserAccount.objects.get(contact_number=current_user))
+    user_info = sync_to_async (UserAccount.objects.get(contact_number=current_user))
 
-    date_today = async_to_sync (datetime.datetime.today().strftime('%m/%d/%Y'))
+    date_today = sync_to_async (datetime.datetime.today().strftime('%m/%d/%Y'))
 
-    active_today = async_to_sync (UserLogs.objects.filter(date=date_today))
+    active_today = sync_to_async (UserLogs.objects.filter(date=date_today))
 
-    client_name = async_to_sync (user_info.full_name)
-    client_id = async_to_sync (user_info.contact_number)
+    client_name = sync_to_async (user_info.full_name)
+    client_id = sync_to_async (user_info.contact_number)
 
-    user_count =  async_to_sync (UserAccount.objects.all().count())
-    active_user_count =  async_to_sync (active_today.count())
-    pui_user_count =  async_to_sync (UserAccount.objects.filter(status='pui').count())
+    user_count =  sync_to_async (UserAccount.objects.all().count())
+    active_user_count =  sync_to_async (active_today.count())
+    pui_user_count =  sync_to_async (UserAccount.objects.filter(status='pui').count())
 
     if request.method == 'POST':
         oldClientPassword = request.POST.get('oldClientPassword')
