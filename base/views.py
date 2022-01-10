@@ -16,6 +16,7 @@ import datetime
 def index(request):
     return render(request, 'index.html')
 
+
 def scan(request):
 
     if request.method == 'POST':
@@ -52,6 +53,7 @@ def scan(request):
 
     return render(request, 'scan.html')
 
+
 def createSuperUser(username, password, email, firstName="", lastName=""):
     invalidInputs = ["", None]
 
@@ -70,6 +72,7 @@ def createSuperUser(username, password, email, firstName="", lastName=""):
     user.save()
 
     return user
+
 
 def login_page(request):
     page = 'login'
@@ -157,9 +160,8 @@ def logout_user(request):
 
 
 # ADMINS VIEW
-@login_required(login_url='/login/')
+@login_required(login_url='login')
 @user_passes_test(lambda u: u.is_superuser, login_url='admin_error')
-
 def admin_home(request):
     current_user = (request.user)
     currentpassword = (request.user.password)
