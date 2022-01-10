@@ -6,3 +6,4 @@ whitenoise
 pytz
 dnspython
 sqlparse
+asgiref
