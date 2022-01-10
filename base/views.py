@@ -1,5 +1,4 @@
 from typing import ContextManager
-from asyncio.tasks import shield
 from django.forms.widgets import PasswordInput
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect, response
@@ -80,7 +79,7 @@ def login_page(request):
         password =  request.POST.get('password')
 
         try:
-            user = User.objects.get(username=contact_number)
+            user =  User.objects.get(username=contact_number)
         except:
             context = {'page': page, 'response': "not_found"}
             return render(request, 'login.html', context)
