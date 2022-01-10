@@ -16,6 +16,7 @@ import datetime
 
 from asgiref.sync import sync_to_async
 from asgiref.sync import async_to_sync
+import asyncio
 
 def index(request):
     return render(request, 'index.html')
@@ -85,13 +86,13 @@ async def login_page(request):
         password =  request.POST.get('password')
 
         try:
-            user = async_to_sync (User.objects.get(username=contact_number))
+            user = await User.objects.get(username=contact_number)
         except:
             context = {'page': page, 'response': "not_found"}
             return render(request, 'login.html', context)
 
-        user = async_to_sync (authenticate(
-            request, username=contact_number, password=password))
+        user = await authenticate(
+            request, username=contact_number, password=password)
 
         if user is None:
             context = {'page': page, 'response': "invalid_credentials"}
@@ -101,7 +102,7 @@ async def login_page(request):
 
             if user is not None:
                 login(request, user)
-                return async_to_sync (redirect('admin_home'))
+                return await (redirect('admin_home'))
 
             else:
                 context = {'page': page, 'response': "invalid_credentials"}
