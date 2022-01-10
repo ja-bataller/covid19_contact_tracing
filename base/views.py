@@ -159,6 +159,7 @@ def signup_page(request):
 
 def logout_user(request):
     logout(request)
+    time.sleep(3)
     return redirect('login')
 
 
@@ -167,7 +168,6 @@ def logout_user(request):
 @user_passes_test(lambda u: u.is_superuser, login_url='admin_error')
 
 def admin_home(request):
-    time.sleep(5)
     current_user = (request.user)
     currentpassword = (request.user.password)
 
