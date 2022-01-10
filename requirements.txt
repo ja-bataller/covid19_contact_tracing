@@ -5,7 +5,7 @@ gunicorn
 whitenoise
 pytz
 dnspython
-sqlparse
+sqlparse==0.2.4
 asgiref
 boto3
 botocore
