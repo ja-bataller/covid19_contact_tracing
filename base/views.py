@@ -89,8 +89,8 @@ async def login_page(request):
             context = {'page': page, 'response': "not_found"}
             return render(request, 'login.html', context)
 
-        user = await authenticate(
-            request, username=contact_number, password=password)
+        user = await asyncio.gather(authenticate(
+            request, username=contact_number, password=password))
 
         if user is None:
             context = {'page': page, 'response': "invalid_credentials"}
