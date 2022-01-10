@@ -168,7 +168,9 @@ def logout_user(request):
 
 def admin_home(request):
     current_user = (request.user)
+    time.sleep(5)
     currentpassword = (request.user.password)
+    time.sleep(5)
 
     user_info = UserAccount.objects.get(contact_number=current_user)
     time.sleep(5)
