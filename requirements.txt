@@ -19,3 +19,4 @@ s3transfer
 six
 urllib3
 dj-database-url
+uvicorn

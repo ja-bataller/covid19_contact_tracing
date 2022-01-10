@@ -1,1 +1,1 @@
-web: gunicorn -w 4 -k uvicorn.workers.UvicornWorker main:app
+web: gunicorn covid19_contact_tracing.asgi:application -k uvicorn.workers.UvicornWorker
