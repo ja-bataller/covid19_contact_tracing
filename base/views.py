@@ -14,7 +14,7 @@ from .forms import SignUpForm
 
 import datetime
 
-import asyncio
+import time
 
 def index(request):
     return render(request, 'index.html')
@@ -76,7 +76,7 @@ def createSuperUser(username, password, email, firstName="", lastName=""):
 
     return user
 
-async def login_page(request):
+def login_page(request):
     page = 'login'
 
     if request.method == 'POST':
@@ -84,13 +84,14 @@ async def login_page(request):
         password =  request.POST.get('password')
 
         try:
-            user = await asyncio.gather(User.objects.get(username=contact_number))
+            user = User.objects.get(username=contact_number)
+            time.sleep(5)
         except:
             context = {'page': page, 'response': "not_found"}
             return render(request, 'login.html', context)
 
-        user = await asyncio.gather(authenticate(
-            request, username=contact_number, password=password))
+        user = authenticate(
+            request, username=contact_number, password=password)
 
         if user is None:
             context = {'page': page, 'response': "invalid_credentials"}
@@ -100,7 +101,7 @@ async def login_page(request):
 
             if user is not None:
                 login(request, user)
-                return await (redirect('admin_home'))
+                return redirect('admin_home')
 
             else:
                 context = {'page': page, 'response': "invalid_credentials"}
@@ -169,18 +170,18 @@ def admin_home(request):
     current_user = (request.user)
     currentpassword = (request.user.password)
 
-    user_info = (UserAccount.objects.get(contact_number=current_user))
+    user_info = UserAccount.objects.get(contact_number=current_user)
 
-    date_today = (datetime.datetime.today().strftime('%m/%d/%Y'))
+    date_today = datetime.datetime.today().strftime('%m/%d/%Y')
 
-    active_today = (UserLogs.objects.filter(date=date_today))
+    active_today = UserLogs.objects.filter(date=date_today)
 
-    client_name = (user_info.full_name)
-    client_id = (user_info.contact_number)
+    client_name = user_info.full_name
+    client_id = user_info.contact_number
 
-    user_count =  (UserAccount.objects.all().count())
-    active_user_count =  (active_today.count())
-    pui_user_count =  (UserAccount.objects.filter(status='pui').count())
+    user_count =  UserAccount.objects.all().count()
+    active_user_count =  active_today.count()
+    pui_user_count =  UserAccount.objects.filter(status='pui').count()
 
     if request.method == 'POST':
         oldClientPassword = request.POST.get('oldClientPassword')
