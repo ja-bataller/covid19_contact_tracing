@@ -14,11 +14,8 @@ from .forms import SignUpForm
 
 import datetime
 
-import time
-
 def index(request):
     return render(request, 'index.html')
-
 
 def scan(request):
 
@@ -56,7 +53,6 @@ def scan(request):
 
     return render(request, 'scan.html')
 
-
 def createSuperUser(username, password, email, firstName="", lastName=""):
     invalidInputs = ["", None]
 
@@ -85,7 +81,6 @@ def login_page(request):
 
         try:
             user = User.objects.get(username=contact_number)
-            time.sleep(5)
         except:
             context = {'page': page, 'response': "not_found"}
             return render(request, 'login.html', context)
@@ -159,7 +154,6 @@ def signup_page(request):
 
 def logout_user(request):
     logout(request)
-    time.sleep(3)
     return redirect('login')
 
 
@@ -172,11 +166,9 @@ def admin_home(request):
     currentpassword = (request.user.password)
 
     user_info = UserAccount.objects.get(contact_number=current_user)
-    time.sleep(5)
     date_today = datetime.datetime.today().strftime('%m/%d/%Y')
 
     active_today = UserLogs.objects.filter(date=date_today)
-    time.sleep(5)
     client_name = user_info.full_name
     client_id = user_info.contact_number
 
