@@ -167,10 +167,9 @@ def logout_user(request):
 @user_passes_test(lambda u: u.is_superuser, login_url='admin_error')
 
 def admin_home(request):
+    time.sleep(5)
     current_user = (request.user)
-    time.sleep(5)
     currentpassword = (request.user.password)
-    time.sleep(5)
 
     user_info = UserAccount.objects.get(contact_number=current_user)
     time.sleep(5)
