@@ -171,11 +171,11 @@ def admin_home(request):
     currentpassword = (request.user.password)
 
     user_info = UserAccount.objects.get(contact_number=current_user)
-
+    time.sleep(5)
     date_today = datetime.datetime.today().strftime('%m/%d/%Y')
 
     active_today = UserLogs.objects.filter(date=date_today)
-
+    time.sleep(5)
     client_name = user_info.full_name
     client_id = user_info.contact_number
 
