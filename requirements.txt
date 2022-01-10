@@ -13,7 +13,7 @@ django-filter
 django-storages
 docutils
 jmespath
-Pillowa
+Pillow
 python-dateutil
 s3transfer
 six
