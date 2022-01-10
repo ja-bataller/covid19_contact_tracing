@@ -15,7 +15,7 @@ from .forms import SignUpForm
 import datetime
 
 from asgiref.sync import sync_to_async
-from asgiref.sync import sync_to_async
+from asgiref.sync import async_to_sync
 
 def index(request):
     return render(request, 'index.html')
@@ -85,12 +85,12 @@ async def login_page(request):
         password =  request.POST.get('password')
 
         try:
-            user = sync_to_async (User.objects.get(username=contact_number))
+            user = async_to_sync (User.objects.get(username=contact_number))
         except:
             context = {'page': page, 'response': "not_found"}
-            return render(request, 'login.html', context)
+            return async_to_sync (render(request, 'login.html', context))
 
-        user = sync_to_async (authenticate(
+        user = async_to_sync (authenticate(
             request, username=contact_number, password=password))
 
         if user is None:
@@ -101,7 +101,7 @@ async def login_page(request):
 
             if user is not None:
                 login(request, user)
-                return redirect('admin_home')
+                return async_to_sync (redirect('admin_home'))
 
             else:
                 context = {'page': page, 'response': "invalid_credentials"}
