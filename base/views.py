@@ -85,10 +85,10 @@ async def login_page(request):
         password =  request.POST.get('password')
 
         try:
-            user = sync_to_async (User.objects.get(username=contact_number))
+            user = async_to_sync (User.objects.get(username=contact_number))
         except:
             context = {'page': page, 'response': "not_found"}
-            return async_to_sync (render(request, 'login.html', context))
+            return render(request, 'login.html', context)
 
         user = async_to_sync (authenticate(
             request, username=contact_number, password=password))
