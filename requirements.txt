@@ -6,3 +6,15 @@ whitenoise
 pytz
 dnspython
 sqlparse
+asgiref
+boto3
+botocore
+django-filter
+django-storages
+docutils
+jmespath
+Pillow
+python-dateutil
+s3transfer
+six
+urllib3
