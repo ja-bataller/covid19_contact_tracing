@@ -1,1 +1,1 @@
-web: gunicorn covid19_contact_tracing.wsgi --log-file -
+web: uvicorn covid19_contact_tracing.asgi --log-file -
