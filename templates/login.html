@@ -48,8 +48,10 @@
                <form method="POST" action="" onsubmit="loginBtnSpinner()">
                   {% csrf_token %}
                   <h2>Log In</h2>
-                  <input id="inputBox2" type="text" name="contact_number" autocomplete="Off"
-                     placeholder="Contact Number" onkeydown="return event.keyCode !== 220 " />
+                  <input id="inputBox2" type="text" name="contact_number" required autocomplete="Off" pattern="[0-9]{11}" 
+                  oninvalid="this.setCustomValidity('Please enter 11 Digit Contact Number (Ex. 09051234567)')"
+                  oninput="this.setCustomValidity('')"
+                  placeholder="Contact Number" onkeydown="return event.keyCode !== 220 " />
                   <input type="password" name="password" placeholder="Password" required />
                   <input id="loginBtn" type="submit" name="" value="Log in" />
                   <button id="loginSpinner" class="btn form-control btn-primary" type="button" style="display: none;"
