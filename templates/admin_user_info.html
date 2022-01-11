@@ -144,7 +144,11 @@
                             <div class="card my-1 mb-5 border-left-secondary">
                                 <div class="card-header">
                                     <h4 class="mt-2">
+                                        {% if response != "pui" %}
                                         <i class="fa fa-user fa-sm"></i> User Profile
+                                        {% else %}
+                                        <i class="fa fa-user fa-sm"></i> User Profile <div style="color: #f8de8f; display: inline-block;">(PUI)</div>
+                                        {% endif %}
                                         <div class="custom-control custom-switch " style="float: right;">
                                             <input type="checkbox" class="custom-control-input edit" id="editSwitch">
                                             <label class="custom-control-label" id="switchLabel"
@@ -372,6 +376,8 @@
         <!-- End of Page Wrapper -->
 
         {% include 'footer.html' %}
+        
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
         <!-- Edit Switch -->
         <script>
@@ -433,12 +439,7 @@
 
         {% if response == 'pui' %}
         <script>
-            iziToast.warning({
-                title: "ALERT",
-                message: "This User is a PUI user.",
-                position: "topCenter",
-                timeout: 5000,
-            });
+            Swal.fire('ALERT!', 'This User is a PUI User.', 'warning')
         </script>
         {% endif %}
 

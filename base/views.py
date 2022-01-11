@@ -453,6 +453,7 @@ def client_dashboard(request):
 
     client_name = user_info.full_name
     client_id = user_info.contact_number
+    client_status = user_info.status
 
     user_log = UserLogs.objects.filter(contact_number=current_user).filter(branch="Manila")
 
@@ -471,7 +472,7 @@ def client_dashboard(request):
             acc_change.set_password(newClientPassword)
             acc_change.save()
 
-            context = {'client_name': client_name, 'client_id': client_id, 'response': 'password changed'}
+            context = {'client_name': client_name, 'client_id': client_id,'response': 'password changed'}
             return render(request, 'client_dashboard.html', context)
 
         else:
@@ -479,7 +480,7 @@ def client_dashboard(request):
             return render(request, 'client_dashboard.html', context)
 
     # Variable - Dictionary
-    context = {'client_name': client_name, 'client_id': client_id, 'user_log': user_log}
+    context = {'client_name': client_name, 'client_id': client_id, 'user_log': user_log, 'client_status':client_status}
 
     # Return Render the HTML Page and pass the Dictionary data
     return render(request, 'client_dashboard.html', context)

@@ -129,7 +129,16 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800" id="greetings">Hi {{client_name}}</h1>
+                    <h1 class="h3 mb-2 text-gray-800" id="greetings">
+                        {% if client_status == 'pui' %}
+
+                        <h1>Hi {{client_name}} <div style="color: #f8de8f; display: inline-block;">(<i class="fas fa-head-side-mask"></i> PUI)</div></h1>
+
+                        {% else %}
+
+                        <h1>Hi {{client_name}}</h1>
+
+                        {% endif %}
 
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
@@ -194,6 +203,14 @@
     <!-- End of Page Wrappser -->
 
     {% include 'footer.html' %}
+    
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    {% if client_status == 'pui' %}
+    <script>
+         Swal.fire('ALERT!', 'You are a PUI User.', 'warning')
+    </script>
+    {% endif %}
 
 </body>
 
