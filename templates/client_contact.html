@@ -187,11 +187,19 @@
                                                 <div class="col-md-12 message-input">
                                                     <div class="single-input-field wow fadeInLeft">
                                                         <textarea id="message" placeholder="Write Your Message"
-                                                            name="message"></textarea>
+                                                            name="message" required></textarea>
 
                                                         <button id="sendEmailBtn" type="submit"
                                                             class="wow fadeInLeft mt-2 btn btn-lg btn-outline-dark"
                                                             style="width: 100%;"> SEND                                            
+                                                        </button>
+
+                                                        <button id="sendEmailSpinner" type="submit"
+                                                            class="wow fadeInLeft mt-2 btn btn-lg btn-outline-dark"
+                                                            style="width: 100%; display: none;" disabled> 
+                                                            <div class="spinner-border text-dark" role="status">
+                                                                <span class="sr-only">Loading...</span>
+                                                            </div>                                          
                                                         </button>
                                                     </div>
                                                 </div>
@@ -254,7 +262,8 @@
         const subject = document.querySelector('#subject');
         const message = document.querySelector("#message")
 
-        const sendEmailBtn = document.querySelector("#sendEmailBtn")
+        let sendEmailBtn = document.querySelector("#sendEmailBtn")
+        let sendEmailSpinner = document.querySelector("#sendEmailSpinner")
 
         if (contactUsForm) {
             contactUsForm.addEventListener('submit', async (e) => {
@@ -281,16 +290,24 @@
                     message: message.value
                 };
 
+                document.querySelector("#sendEmailBtn").style.display = 'none';
+                document.querySelector("#sendEmailSpinner").style.display = 'block';
+
                 emailjs.send('jdbt', 'Online_CV', templateParams)
                     .then(function (response) {
                         Swal.fire('Success', 'Your message has been sent successfully.', 'success')
                         document.querySelector("#subject").value = 'default';
                         document.querySelector("#message").value = '';
+                        document.querySelector("#sendEmailBtn").style.display = 'block';
+                        document.querySelector("#sendEmailSpinner").style.display = 'none';
+                        
 
                     }, function (err) {
                         Swal.fire('Error', 'Server error.', 'error')
                         document.querySelector("#subject").value = 'default';
                         document.querySelector("#message").value = '';
+                        document.querySelector("#sendEmailBtn").style.display = 'block';
+                        document.querySelector("#sendEmailSpinner").style.display = 'none';
                     });
             });
         }
