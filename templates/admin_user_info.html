@@ -147,7 +147,7 @@
                                         {% if response != "pui" %}
                                         <i class="fa fa-user fa-sm"></i> User Profile
                                         {% else %}
-                                        <i class="fa fa-user fa-sm"></i> User Profile <div style="color: #f8de8f; display: inline-block;">(<i class="fas fa-head-side-mask"></i>PUI)</div>
+                                        <i class="fa fa-user fa-sm"></i> User Profile <div style="color: #f8de8f; display: inline-block;">(<i class="fas fa-head-side-mask"></i> PUI)</div>
                                         {% endif %}
                                         <div class="custom-control custom-switch " style="float: right;">
                                             <input type="checkbox" class="custom-control-input edit" id="editSwitch">
@@ -322,7 +322,7 @@
                                         style="background-color: #ffc107; color: white; display: none;" disabled>
                                         <span class="spinner-border spinner-border-sm" role="status"
                                             aria-hidden="true"></span>
-                                        updating...
+                                        Updating
                                     </button>
                                 </div>
                             </div>
@@ -340,16 +340,16 @@
                                 </div>
                                 <div class="modal-body">Are you sure you want to mark this user as Active?</div>
                                 <div class="modal-footer">
-                                    <button id="cancelPuiBtn" class="btn btn-secondary" type="button"
+                                    <button id="cancelActiveBtn" class="btn btn-secondary" type="button"
                                         data-dismiss="modal">Cancel</button>
-                                    <a id="puiBtn" class="btn" href="{% url 'admin_user_active' user_info.contact_number %}""
+                                    <a id="activeBtn" class="btn" href="{% url 'admin_user_active' user_info.contact_number %}""
                                         style="background-color: #07a4ff; color: white;">Yes</a>
 
-                                    <button id="puiSpinner" class="btn" type="button"
+                                    <button id="activeSpinner" class="btn" type="button"
                                         style="background-color: #07a4ff; color: white; display: none;" disabled>
                                         <span class="spinner-border spinner-border-sm" role="status"
                                             aria-hidden="true"></span>
-                                        updating...
+                                       Updating
                                     </button>
                                 </div>
                             </div>
@@ -453,6 +453,33 @@
             });
         </script>
         {% endif %}
+
+        <script>
+            let puiBtn = document.querySelector("#puiBtn")
+            let puiSpinner = document.querySelector("#puiSpinner")
+            let cancelPuiBtn = document.querySelector("#cancelPuiBtn")
+
+            let activeBtn = document.querySelector("#activeBtn")
+            let activeSpinner = document.querySelector("#activeSpinner")
+            let cancelActiveBtn = document.querySelector("#cancelActiveBtn")
+
+        if (puiBtn) {
+            puiBtn.addEventListener("click", function () {
+                puiBtn.style.display = "none";
+                puiSpinner.style.display = "block";
+                cancelPuiBtn.setAttribute("disabled", true);
+            });
+        }
+
+        if (activeBtn) {
+            activeBtn.addEventListener("click", function () {
+                activeBtn.style.display = "none";
+                activeSpinner.style.display = "block";
+                cancelActiveBtn.setAttribute("disabled", true);
+            });
+        }
+           
+        </script>
 </body>
 
 </html>

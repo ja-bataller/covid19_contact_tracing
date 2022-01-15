@@ -23,14 +23,14 @@ class SignUpForm(forms.ModelForm):
         ]
 
         widgets = {
-            'full_name': forms.TextInput(attrs={'placeholder': 'Full Name', 'autocomplete': 'off'}),
+            'full_name': forms.TextInput(attrs={'placeholder': 'Full Name', 'autocomplete': 'off', 'style': "text-transform: capitalize;"}),
             'gender' : forms.Select(choices=gender_choices, attrs={'class': 'form-select'}),
             'contact_number': forms.TextInput(attrs={'id': 'inputBox','name':'contact_number','placeholder': 'Contact Number', 'autocomplete': 'off', 'onkeydown':"return event.keyCode !== 16 "
             ,'pattern':"[0-9]{11}",'oninvalid':"this.setCustomValidity('Please enter 11 Digit Contact Number (Ex. 09051234567)')"
             ,'oninput':"this.setCustomValidity('')"
             }),
             'email_address': forms.EmailInput(attrs={'placeholder': 'Email Address','name':'email_address','autocomplete': 'off'}),
-            'home_address': forms.TextInput(attrs={'placeholder': 'Home Address', 'autocomplete': 'off'}),
+            'home_address': forms.TextInput(attrs={'placeholder': 'Home Address', 'autocomplete': 'off', 'style': "text-transform: capitalize;"}),
             'password': forms.PasswordInput(attrs={'placeholder': 'Password','name':'password','autocomplete': 'off'}),
             # <input type="text" name="" placeholder="Full Name" />
             # <input type="number"
