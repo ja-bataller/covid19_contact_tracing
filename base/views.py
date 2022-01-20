@@ -1,4 +1,3 @@
-from socket import J1939_MAX_UNICAST_ADDR
 from typing import ContextManager
 from django.forms.widgets import PasswordInput
 from django.shortcuts import render, redirect
@@ -27,8 +26,10 @@ def scan(request):
         store = request.POST.get('location')
         # date_today = datetime.datetime.today().strftime('%m/%d/%Y')
         # time_today = datetime.datetime.today().strftime("%I:%M %p")
-        date_today = datetime.datetime.today(pytz.timezone('Asia/Hong_Kong')).strftime('%m/%d/%Y')
-        time_today = datetime.datetime.today(pytz.timezone('Asia/Hong_Kong')).strftime("%I:%M %p")
+        date_today = datetime.datetime.now(pytz.timezone('Asia/Hong_Kong')).strftime('%m/%d/%Y')
+        time_today = datetime.datetime.now(pytz.timezone('Asia/Hong_Kong')).strftime("%I:%M %p")
+        print(date_today)
+        print(time_today)
 
         try:
             user_status = UserAccount.objects.get(contact_number=contact_number)
