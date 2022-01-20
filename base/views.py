@@ -1,3 +1,4 @@
+from socket import J1939_MAX_UNICAST_ADDR
 from typing import ContextManager
 from django.forms.widgets import PasswordInput
 from django.shortcuts import render, redirect
@@ -12,6 +13,7 @@ from .models import UserLogs
 from .forms import SignUpForm
 
 import datetime
+import pytz 
 
 def index(request):
     return render(request, 'index.html')
@@ -23,8 +25,10 @@ def scan(request):
         contact_number = request.POST.get('scanned_id')
 
         store = request.POST.get('location')
-        date_today = datetime.datetime.today().strftime('%m/%d/%Y')
-        time_today = datetime.datetime.today().strftime("%I:%M %p")
+        # date_today = datetime.datetime.today().strftime('%m/%d/%Y')
+        # time_today = datetime.datetime.today().strftime("%I:%M %p")
+        date_today = datetime.datetime.today(pytz.timezone('Asia/Hong_Kong')).strftime('%m/%d/%Y')
+        time_today = datetime.datetime.today(pytz.timezone('Asia/Hong_Kong')).strftime("%I:%M %p")
 
         try:
             user_status = UserAccount.objects.get(contact_number=contact_number)
