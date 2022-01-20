@@ -265,6 +265,7 @@
                                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                             <thead>
                                                 <tr>
+                                                    <th>Name</th>
                                                     <th>Branch</th>
                                                     <th>Location</th>
                                                     <th>Date</th>
@@ -273,6 +274,7 @@
                                             </thead>
                                             <tfoot>
                                                 <tr>
+                                                    <th>Name</th>
                                                     <th>Branch</th>
                                                     <th>Location</th>
                                                     <th>Date</th>
@@ -282,6 +284,7 @@
                                             <tbody>
                                                 {% for user in user_history %}
                                                 <tr>
+                                                    <td>{{user.full_name}}</td>
                                                     <td>{{user.branch}}</td>
                                                     <td>{{user.location}}</td>
                                                     <td>{{user.date}}</td>

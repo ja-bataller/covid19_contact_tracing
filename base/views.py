@@ -9,6 +9,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.hashers import check_password
 from .models import UserAccount
 from .models import UserLogs
+from .models import ActiveLogs
 from .forms import SignUpForm
 
 import datetime
@@ -21,26 +22,48 @@ def index(request):
 def scan(request):
 
     if request.method == 'POST':
-        contact_number = request.POST.get('scanned_id')
-
+        id = request.POST.get('scanned_id')
         store = request.POST.get('location')
+
         # date_today = datetime.datetime.today().strftime('%m/%d/%Y')
         # time_today = datetime.datetime.today().strftime("%I:%M %p")
         date_today = datetime.datetime.now(pytz.timezone('Asia/Hong_Kong')).strftime('%m/%d/%Y')
         time_today = datetime.datetime.now(pytz.timezone('Asia/Hong_Kong')).strftime("%I:%M %p")
-        print(date_today)
-        print(time_today)
 
         try:
-            user_status = UserAccount.objects.get(contact_number=contact_number)
+            user_status = UserAccount.objects.get(contact_number=id)
 
             if user_status.status == "active":
 
-                time_in = UserLogs(full_name=user_status.full_name, contact_number=contact_number,
+                time_in = UserLogs(full_name=user_status.full_name, contact_number=id,
                                 branch="Manila", date=date_today, location=store, time_in=time_today)
                 time_in.save()
 
-                return render(request, 'scan.html')
+                if ActiveLogs.objects.filter(contact_number=id).exists():
+                    user_active_log = ActiveLogs.objects.get(contact_number=id)
+
+                    if user_active_log.date == date_today:
+                        print("existing and update")
+                        ActiveLogs.objects.filter(contact_number=id).update(location=store)
+                        ActiveLogs.objects.filter(contact_number=id).update(time_in=time_today)
+
+                        return render(request, 'scan.html')
+
+                    else:
+                        print("clear date")
+                        ActiveLogs.objects.filter(contact_number=id).update(location=store)
+                        ActiveLogs.objects.filter(contact_number=id).update(date=date_today)
+                        ActiveLogs.objects.filter(contact_number=id).update(time_in=time_today)
+
+                        return render(request, 'scan.html')
+
+                else:
+                    print("create new log")
+                    new_activelog = ActiveLogs(full_name=user_status.full_name, contact_number=id,
+                                branch="Manila", date=date_today, location=store, time_in=time_today)
+                    new_activelog.save()
+
+                    return render(request, 'scan.html')
 
             else:
                 print("Alert - User is a PUI user.")
@@ -174,7 +197,7 @@ def admin_home(request):
     user_info = UserAccount.objects.get(contact_number=current_user)
     date_today = datetime.datetime.today().strftime('%m/%d/%Y')
 
-    active_today = UserLogs.objects.filter(date=date_today)
+    active_today = ActiveLogs.objects.filter(date=date_today)
     client_name = user_info.full_name
     client_id = user_info.contact_number
 

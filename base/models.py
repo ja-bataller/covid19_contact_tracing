@@ -28,3 +28,15 @@ class UserLogs(models.Model):
 
     def __str__(self) -> str:
         return self.contact_number
+
+class ActiveLogs(models.Model):
+    full_name = models.CharField(max_length=256)
+    contact_number = models.CharField(max_length=256)
+    branch = models.CharField(max_length=256)
+    location = models.CharField(max_length=256)
+    date = models.CharField(max_length=256)
+    time_in = models.CharField(max_length=256)
+
+    def __str__(self) -> str:
+        return self.contact_number
+

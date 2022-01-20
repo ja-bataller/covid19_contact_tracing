@@ -29,7 +29,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-4k)xahb!4cqxbfb@epu1z-5j%!70a&o$us1-n+ig2kc(rwr3@w'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["xm-malls-covid19-tracing.herokuapp.com", "127.0.0.1"]
 
