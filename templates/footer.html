@@ -162,12 +162,28 @@
         save_changes_spinner.style.display = "block";
         cancel_btn.setAttribute("disabled", true);
 
-        if (newClientPassword.value != confirmClientPassword.value) {
+        if (newClientPassword.value == "" || confirmClientPassword == "") {
+            iziToast.error({
+                title: "Invalid",
+                message: "Please enter a password. (Password cannot be blank)",
+                position: "topCenter",
+                timeout: 3000,
+            });
+
+            oldClientPassword.value = ""
+            newClientPassword.value = ""
+            confirmClientPassword.value = ""
+            save_changes_btn.style.display = "block";
+            save_changes_spinner.style.display = "none";
+            cancel_btn.removeAttribute("disabled");
+        }
+
+        else if (newClientPassword.value != confirmClientPassword.value) {
             iziToast.error({
                 title: "Invalid",
                 message: "The New password and Confirm password doesn't match.",
                 position: "topCenter",
-                timeout: 5000,
+                timeout: 3000,
             });
 
             oldClientPassword.value = ""
