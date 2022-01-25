@@ -15,10 +15,11 @@ from .forms import SignUpForm
 import datetime
 import pytz 
 
+# INDEX PAGE
 def index(request):
     return render(request, 'index.html')
 
-
+# QR CODE SCANNER PAGE
 def scan(request):
 
     if request.method == 'POST':
@@ -35,14 +36,14 @@ def scan(request):
 
             if user_status.status == "active":
 
-                time_in = UserLogs(full_name=user_status.full_name, contact_number=id,
-                                branch="Manila", date=date_today, location=store, time_in=time_today)
+                time_in = UserLogs(full_name=user_status.full_name, contact_number=id, branch="Manila", date=date_today, location=store, time_in=time_today)
                 time_in.save()
 
                 if ActiveLogs.objects.filter(contact_number=id).exists():
                     user_active_log = ActiveLogs.objects.get(contact_number=id)
 
                     if user_active_log.date == date_today:
+
                         print("existing and update")
                         ActiveLogs.objects.filter(contact_number=id).update(location=store)
                         ActiveLogs.objects.filter(contact_number=id).update(time_in=time_today)
@@ -50,7 +51,8 @@ def scan(request):
                         return render(request, 'scan.html')
 
                     else:
-                        print("clear date")
+                
+                        # IF DATE IS NOT TODAY THEN , PROCESS
                         ActiveLogs.objects.filter(contact_number=id).update(location=store)
                         ActiveLogs.objects.filter(contact_number=id).update(date=date_today)
                         ActiveLogs.objects.filter(contact_number=id).update(time_in=time_today)
@@ -59,8 +61,7 @@ def scan(request):
 
                 else:
                     print("create new log")
-                    new_activelog = ActiveLogs(full_name=user_status.full_name, contact_number=id,
-                                branch="Manila", date=date_today, location=store, time_in=time_today)
+                    new_activelog = ActiveLogs(full_name=user_status.full_name, contact_number=id, branch="Manila", date=date_today, location=store, time_in=time_today)
                     new_activelog.save()
 
                     return render(request, 'scan.html')
@@ -81,7 +82,7 @@ def scan(request):
 
     return render(request, 'scan.html')
 
-
+# CREATING A SUPER USER PROCESS
 def createSuperUser(username, password, email, firstName="", lastName=""):
     invalidInputs = ["", None]
 
@@ -101,7 +102,7 @@ def createSuperUser(username, password, email, firstName="", lastName=""):
 
     return user
 
-
+# LOG-IN PAGE 
 def login_page(request):
     page = 'login'
 
@@ -144,7 +145,7 @@ def login_page(request):
     context = {'page': page}
     return render(request, 'login.html', context)
 
-
+# SIGN-UP PAGE
 def signup_page(request):
     page = 'signup'
     form = SignUpForm()
@@ -181,13 +182,13 @@ def signup_page(request):
     context = {'form': form, 'page': page}
     return render(request, 'login.html', context)
 
-
+# LOG-OUT USER PROCESS
 def logout_user(request):
     logout(request)
     return redirect('login')
 
 
-# ADMINS VIEW
+# ADMINISTRATOR - ADMIN HOME PAGE
 @login_required(login_url='login')
 @user_passes_test(lambda u: u.is_superuser, login_url='admin_error')
 def admin_home(request):
@@ -232,7 +233,7 @@ def admin_home(request):
                'active_user_count': active_user_count, 'pui_user_count': pui_user_count, 'active_today': active_today}
     return render(request, 'admin_home.html', context)
 
-
+# ADMINISTRATOR - TABLE OF CLIENT USERS
 @login_required(login_url='login')
 @user_passes_test(lambda u: u.is_superuser, login_url='admin_error')
 def admin_users_dashboard(request):
@@ -273,7 +274,7 @@ def admin_users_dashboard(request):
                'client_id': client_id}
     return render(request, 'admin_users_dashboard.html', context)
 
-
+# ADMINISTRATOR - CLIENT USER INFORMATIONS
 @login_required(login_url='login')
 @user_passes_test(lambda u: u.is_superuser, login_url='admin_error')
 def admin_user_info(request, id):
@@ -297,13 +298,10 @@ def admin_user_info(request, id):
 
         User.objects.filter(username=id).update(email=email_address)
 
-        UserAccount.objects.filter(
-            contact_number=id).update(full_name=full_name)
+        UserAccount.objects.filter(contact_number=id).update(full_name=full_name)
         UserAccount.objects.filter(contact_number=id).update(gender=gender)
-        UserAccount.objects.filter(contact_number=id).update(
-            email_address=email_address)
-        UserAccount.objects.filter(contact_number=id).update(
-            home_address=home_address)
+        UserAccount.objects.filter(contact_number=id).update(email_address=email_address)
+        UserAccount.objects.filter(contact_number=id).update(home_address=home_address)
 
         current_user = request.user
         user_info = UserAccount.objects.get(contact_number=current_user)
@@ -314,36 +312,34 @@ def admin_user_info(request, id):
         user = UserAccount.objects.get(contact_number=id)
         gender = user.gender
 
-        context = {'user_info': user, 'gender': gender,
-                   'client_name': client_name, 'client_id': client_id, 'user_history': user_history, 'response': "success"}
+        context = {'user_info': user, 'gender': gender, 'client_name': client_name, 'client_id': client_id, 'user_history': user_history, 'response': "success"}
 
         return render(request, 'admin_user_info.html', context)
 
     if user.status == "pui":
-        context = {'user_info': user, 'gender': gender,
-               'client_name': client_name, 'client_id': client_id, 'user_history': user_history, 'response': "pui"}
+        context = {'user_info': user, 'gender': gender, 'client_name': client_name, 'client_id': client_id, 'user_history': user_history, 'response': "pui"}
 
         return render(request, 'admin_user_info.html', context)
     
-    context = {'user_info': user, 'gender': gender,
-            'client_name': client_name, 'client_id': client_id, 'user_history': user_history, 'response': "active"}
+    context = {'user_info': user, 'gender': gender, 'client_name': client_name, 'client_id': client_id, 'user_history': user_history, 'response': "active"}
 
     return render(request, 'admin_user_info.html', context)
 
-
+# ADMINISTRATOR - UPDATING STATUS OF CLIENT USER TO PUI
 @login_required(login_url='login')
 @user_passes_test(lambda u: u.is_superuser, login_url='admin_error')
 def admin_user_pui(request, id):
     UserAccount.objects.filter(contact_number=id).update(status="pui")
     return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
+# ADMINISTRATOR - UPDATING STATUS OF CLIENT USER TO ACTIVE
 @login_required(login_url='login')
 @user_passes_test(lambda u: u.is_superuser, login_url='admin_error')
 def admin_user_active(request, id):
     UserAccount.objects.filter(contact_number=id).update(status="active")
     return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
-
+# ADMINISTRATOR - TABLE OF PUI CLIENT USERS
 @login_required(login_url='login')
 @user_passes_test(lambda u: u.is_superuser, login_url='admin_error')
 def admin_pui_dashboard(request):
@@ -382,7 +378,7 @@ def admin_pui_dashboard(request):
     context = {'client_name': client_name, 'client_id': client_id, 'pui_user' : pui_user}
     return render(request, 'admin_pui_dashboard.html', context)
 
-
+# ADMINISTRATOR - ABOUT PAGE
 @login_required(login_url='login')
 @user_passes_test(lambda u: u.is_superuser, login_url='admin_error')
 def admin_about(request):
@@ -419,7 +415,7 @@ def admin_about(request):
     context = {'client_name': client_name, 'client_id': client_id}
     return render(request, 'admin_about.html', context)
 
-
+# ADMINISTRATOR - ERROR LANDING PAGE
 @login_required(login_url='login')
 @user_passes_test(lambda u: u.is_superuser, login_url='client_dashboard')
 def client_error(request):
@@ -465,7 +461,7 @@ def client_error(request):
     return render(request, 'client_error.html', context)
 
 
-# CLIENT VIEW
+# CLIENT - CLIENT DASHBOARD PAGE
 @login_required(login_url='login')
 @staff_member_required(login_url='client_error')
 def client_dashboard(request):
@@ -513,7 +509,7 @@ def client_dashboard(request):
     # Return Render the HTML Page and pass the Dictionary data
     return render(request, 'client_dashboard.html', context)
 
-
+# CLIENT - CONTACT PAGE
 @login_required(login_url='login')
 @staff_member_required(login_url='client_error')
 def client_contact(request):
@@ -552,7 +548,7 @@ def client_contact(request):
 
     return render(request, 'client_contact.html', context)
 
-
+#  CLIENT - ABOUT PAGE
 @login_required(login_url='login')
 @staff_member_required(login_url='client_error')
 def client_about(request):
@@ -589,7 +585,7 @@ def client_about(request):
     context = {'client_name': client_name, 'client_id': client_id}
     return render(request, 'client_about.html', context)
 
-
+#  CLIENT - ERROR LANDING PAGE
 @login_required(login_url='login')
 @staff_member_required(login_url='admin_home')
 def admin_error(request):
