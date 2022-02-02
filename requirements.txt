@@ -21,3 +21,4 @@ urllib3
 dj-database-url
 pytz
 uvicorn
+pyserial

@@ -13,7 +13,26 @@ from .models import ActiveLogs
 from .forms import SignUpForm
 
 import datetime
-import pytz 
+import pytz
+
+import serial
+
+def rfid_scanner():
+    try:
+        ser = serial.Serial('COM5', baudrate = 9600, timeout=1)\
+
+    except serial.SerialException:
+        error = "No connection to the device could be established"
+        print (error)
+        return error
+
+    while 1 :
+        arduinoData = ser.readline().decode('ascii')
+        if arduinoData == "":
+            pass
+        else:
+            print(arduinoData)
+            return arduinoData
 
 # INDEX PAGE
 def index(request):
@@ -81,6 +100,74 @@ def scan(request):
         # print("Current Time:", time_today)
 
     return render(request, 'scan.html')
+
+# RFID SCANNER PAGE
+def tap(request):
+
+    scanned_id = rfid_scanner()
+
+    if request.method == 'POST':
+        store = request.POST.get('location')
+        id = request.POST.get('scanned_id')
+
+        print(store)
+        print(id.replace(" ", ""))
+
+        # date_today = datetime.datetime.today().strftime('%m/%d/%Y')
+        # time_today = datetime.datetime.today().strftime("%I:%M %p")
+        date_today = datetime.datetime.now(pytz.timezone('Asia/Hong_Kong')).strftime('%m/%d/%Y')
+        time_today = datetime.datetime.now(pytz.timezone('Asia/Hong_Kong')).strftime("%I:%M %p")
+
+        try:
+            user_status = UserAccount.objects.get(rfid=id.replace(" ", ""))
+
+            if user_status.status == "active":
+
+                time_in = UserLogs(full_name=user_status.full_name, contact_number=user_status.contact_number, branch="Manila", date=date_today, location=store, time_in=time_today)
+                time_in.save()
+
+                if ActiveLogs.objects.filter(contact_number=user_status.contact_number).exists():
+                    user_active_log = ActiveLogs.objects.get(contact_number=user_status.contact_number)
+
+                    if user_active_log.date == date_today:
+
+                        print("existing and update")
+                        ActiveLogs.objects.filter(contact_number=user_status.contact_number).update(location=store)
+                        ActiveLogs.objects.filter(contact_number=user_status.contact_number).update(time_in=time_today)
+
+                        return render(request, 'scan.html')
+
+                    else:
+                
+                        # IF DATE IS NOT TODAY THEN , PROCESS
+                        ActiveLogs.objects.filter(contact_number=user_status.contact_number).update(location=store)
+                        ActiveLogs.objects.filter(contact_number=user_status.contact_number).update(date=date_today)
+                        ActiveLogs.objects.filter(contact_number=user_status.contact_number).update(time_in=time_today)
+
+                        return render(request, 'scan.html')
+
+                else:
+                    print("create new log")
+                    new_activelog = ActiveLogs(full_name=user_status.full_name, contact_number=user_status.contact_number, branch="Manila", date=date_today, location=store, time_in=time_today)
+                    new_activelog.save()
+
+                    return render(request, 'scan.html')
+
+            else:
+                print("Alert - User is a PUI user.")
+                return render(request, 'scan.html', {"response" : "pui"})
+
+        except:
+            print("Error - User not found.")
+            return render(request, 'scan.html', {"response" : "unknown"})
+
+        # print("User name:", user_status.full_name)
+        # print("ID:", contact_number)
+        # print("Store:", store)
+        # print("Today's date:", date_today)
+        # print("Current Time:", time_today)
+
+    return render(request, 'tap.html', {"id":scanned_id})
 
 # CREATING A SUPER USER PROCESS
 def createSuperUser(username, password, email, firstName="", lastName=""):

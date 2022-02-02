@@ -11,6 +11,7 @@ class UserAccount(models.Model):
     home_address = models.CharField(max_length=256)
     password = models.CharField(max_length=256, blank= True)
     status = models.CharField(max_length=256, null= True, blank= True)
+    rfid = models.CharField(max_length=256, null= True, blank= True)
     
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
