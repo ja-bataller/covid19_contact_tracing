@@ -200,7 +200,7 @@
                                             </div>
                                             {% endif %}
 
-                                            <div class="col-lg-3">
+                                            <div class="col-lg-2">
                                                 <div class="form-group">
                                                     <label>Contact Number</label>
                                                     <input value={{user_info.contact_number}} type="number"
@@ -210,7 +210,17 @@
                                                         maxlength="15" autocomplete="off" required disabled>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-3">
+
+                                            <div class="col-lg-2">
+                                                <div class="form-group">
+                                                    <label>RFID UID</label>
+                                                    <input value={{user_info.rfid}} type="text"
+                                                        class="form-control update-form" name="rfid_uid"
+                                                        id="rfid_uid" autocomplete="off" required disabled>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-2">
                                                 <div class="form-group">
                                                     <label>Email Address</label>
                                                     <input value={{user_info.email_address}} type="email"
@@ -391,6 +401,7 @@
             let maleRBTN = document.querySelector("#maleRBTN")
             let femaleRBTN = document.querySelector("#femaleRBTN")
             let home_address = document.querySelector("#home_address")
+            let rfid_uid = document.querySelector("#rfid_uid")
             let email_address = document.querySelector("#email_address")
 
 
@@ -402,6 +413,7 @@
                     maleRBTN.removeAttribute("disabled")
                     femaleRBTN.removeAttribute("disabled")
                     home_address.removeAttribute("disabled")
+                    rfid_uid.removeAttribute("disabled")
                     email_address.removeAttribute("disabled")
                 }
                 else {
@@ -410,6 +422,7 @@
                     maleRBTN.setAttribute("disabled", true)
                     femaleRBTN.setAttribute("disabled", true)
                     home_address.setAttribute("disabled", true)
+                    rfid_uid.setAttribute("disabled", true)
                     email_address.setAttribute("disabled", true)
 
                 }

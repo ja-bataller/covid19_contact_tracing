@@ -67,7 +67,7 @@ def scan(request):
                         ActiveLogs.objects.filter(contact_number=id).update(location=store)
                         ActiveLogs.objects.filter(contact_number=id).update(time_in=time_today)
 
-                        return render(request, 'scan.html')
+                        return render(request, 'scan.html', {"response": "success"})
 
                     else:
                 
@@ -76,14 +76,14 @@ def scan(request):
                         ActiveLogs.objects.filter(contact_number=id).update(date=date_today)
                         ActiveLogs.objects.filter(contact_number=id).update(time_in=time_today)
 
-                        return render(request, 'scan.html')
+                        return render(request, 'scan.html', {"response": "success"})
 
                 else:
                     print("create new log")
                     new_activelog = ActiveLogs(full_name=user_status.full_name, contact_number=id, branch="Manila", date=date_today, location=store, time_in=time_today)
                     new_activelog.save()
 
-                    return render(request, 'scan.html')
+                    return render(request, 'scan.html', {"response": "success"})
 
             else:
                 print("Alert - User is a PUI user.")
@@ -135,7 +135,7 @@ def tap(request):
                         ActiveLogs.objects.filter(contact_number=user_status.contact_number).update(location=store)
                         ActiveLogs.objects.filter(contact_number=user_status.contact_number).update(time_in=time_today)
 
-                        return render(request, 'scan.html')
+                        return render(request, 'scan.html', {"response": "success"})
 
                     else:
                 
@@ -144,14 +144,14 @@ def tap(request):
                         ActiveLogs.objects.filter(contact_number=user_status.contact_number).update(date=date_today)
                         ActiveLogs.objects.filter(contact_number=user_status.contact_number).update(time_in=time_today)
 
-                        return render(request, 'scan.html')
+                        return render(request, 'scan.html', {"response": "success"})
 
                 else:
                     print("create new log")
                     new_activelog = ActiveLogs(full_name=user_status.full_name, contact_number=user_status.contact_number, branch="Manila", date=date_today, location=store, time_in=time_today)
                     new_activelog.save()
 
-                    return render(request, 'scan.html')
+                    return render(request, 'scan.html', {"response": "success"})
 
             else:
                 print("Alert - User is a PUI user.")
@@ -381,12 +381,14 @@ def admin_user_info(request, id):
         full_name = request.POST.get('full_name')
         gender = request.POST.get('gender')
         email_address = request.POST.get('email_address')
+        rfid_uid = request.POST.get('rfid_uid')
         home_address = request.POST.get('home_address')
 
         User.objects.filter(username=id).update(email=email_address)
 
         UserAccount.objects.filter(contact_number=id).update(full_name=full_name)
         UserAccount.objects.filter(contact_number=id).update(gender=gender)
+        UserAccount.objects.filter(contact_number=id).update(rfid=rfid_uid)
         UserAccount.objects.filter(contact_number=id).update(email_address=email_address)
         UserAccount.objects.filter(contact_number=id).update(home_address=home_address)
 

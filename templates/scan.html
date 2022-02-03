@@ -550,6 +550,17 @@
   </script>
   {% endif %}
 
+  {% if response == 'success' %}
+  <script>
+    iziToast.success({
+      title: "Sucess",
+      message: "Welcome to XM Malls - Manila Branch.",
+      position: "topCenter",
+      timeout: 5000,
+    });
+  </script>
+  {% endif %}
+
 </body>
 
 </html>
