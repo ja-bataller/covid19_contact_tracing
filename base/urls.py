@@ -4,13 +4,14 @@ from . import views
 urlpatterns = [
     path('', views.index, name ="index"),
     path('scan/', views.scan, name="scan"),
-     path('tap/', views.tap, name="tap"),
+    path('tap/', views.tap, name="tap"),
     path('login/', views.login_page, name="login"),
     path('signup/', views.signup_page, name="signup"),
     path('logout/', views.logout_user, name="logout"),
 
     # ADMINS URLS
     path('admin_home/', views.admin_home, name="admin_home"),
+    path('admin_history/', views.admin_history, name="admin_history"),
     path('admin_users/', views.admin_users_dashboard, name="admin_users"),
     path('admin_user_info/<str:id>', views.admin_user_info, name="admin_user_info"),
     path('admin_user_pui/<str:id>', views.admin_user_pui, name="admin_user_pui"),

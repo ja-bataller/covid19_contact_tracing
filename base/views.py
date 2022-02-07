@@ -320,6 +320,55 @@ def admin_home(request):
                'active_user_count': active_user_count, 'pui_user_count': pui_user_count, 'active_today': active_today}
     return render(request, 'admin_home.html', context)
 
+
+# ADMINISTRATOR - HISTORY HOME PAGE
+@login_required(login_url='login')
+@user_passes_test(lambda u: u.is_superuser, login_url='admin_error')
+def admin_history(request):
+    current_user = (request.user)
+    currentpassword = (request.user.password)
+
+    user_info = UserAccount.objects.get(contact_number=current_user)
+    date_today = datetime.datetime.today().strftime('%m/%d/%Y')
+
+    active_today = ActiveLogs.objects.filter(date=date_today)
+
+    history = UserLogs.objects.all()
+    
+    client_name = user_info.full_name
+    client_id = user_info.contact_number
+
+    user_count =  UserAccount.objects.all().count()
+    active_user_count =  active_today.count()
+    pui_user_count =  UserAccount.objects.filter(status='pui').count()
+
+    if request.method == 'POST':
+        oldClientPassword = request.POST.get('oldClientPassword')
+        newClientPassword = request.POST.get('newClientPassword')
+
+        match_check = check_password(oldClientPassword, currentpassword)
+        if match_check:
+
+            UserAccount.objects.filter(contact_number=current_user).update(
+                password=newClientPassword)
+
+            acc_change = User.objects.get(username=client_id)
+            acc_change.set_password(newClientPassword)
+            acc_change.save()
+
+            context = {'client_name': client_name, 'client_id': client_id, 'user_count': user_count,
+                       'active_user_count': active_user_count, 'pui_user_count': pui_user_count, 'active_today': active_today, 'response': "password changed"}
+            return render(request, 'admin_history.html', context)
+
+        else:
+            context = {'client_name': client_name, 'client_id': client_id, 'user_count': user_count,
+                       'active_user_count': active_user_count, 'pui_user_count': pui_user_count, 'active_today': active_today, 'response': "password mismatch"}
+            return render(request, 'admin_history.html', context)
+
+    context = {'client_name': client_name, 'client_id': client_id, 'user_count': user_count,
+               'active_user_count': active_user_count, 'pui_user_count': pui_user_count, 'active_today': active_today, 'history': history}
+    return render(request, 'admin_history.html', context)
+
 # ADMINISTRATOR - TABLE OF CLIENT USERS
 @login_required(login_url='login')
 @user_passes_test(lambda u: u.is_superuser, login_url='admin_error')

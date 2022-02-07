@@ -86,108 +86,10 @@
 
                <div class="row">
 
-
-                  <!-- Active User Count -->
-                  <div class="col-xl-4 col-md-12 mb-4 mb-3">
-
-                     <div class="card border-left-success shadow py-4 mb-3">
-                        <div class="card-body">
-                           <div class="row no-gutters align-items-center">
-                              <div class="col mr-2">
-                                 <div class="
-                                       text-md
-                                       font-weight-bold
-                                       text-primary text-uppercase
-                                       mb-1
-                                       ">
-                                    Active Users
-                                 </div>
-                                 <div class="h1 mb-0 font-weight-bold text-gray-800">
-                                    {{active_user_count}}
-                                 </div>
-                              </div>
-                              <div class="col-auto">
-                                 <i class="fas fa-user-check fa-3x text-gray-600"></i>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-
-                  </div>
-
-                  <!-- User Count -->
-                  <div class="col-xl-4 col-md-12 mb-4 mb-3">
-
-                     <div class="card border-left-dark shadow py-4 mb-3">
-                        <div class="card-body">
-                           <div class="row no-gutters align-items-center">
-                              <div class="col mr-2">
-                                 <div class="
-                                       text-md
-                                       font-weight-bold
-                                       text-primary text-uppercase
-                                       mb-1
-                                       ">
-                                    Users
-                                 </div>
-                                 <div class="h1 mb-0 font-weight-bold text-gray-800">
-                                    {{user_count}}
-                                 </div>
-                              </div>
-                              <div class="col-auto">
-                                 <i class="fas fa-users fa-3x text-gray-600"></i>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-
-                  </div>
-
-                  <!-- PUI User Count -->
-                  <div class="col-xl-4 col-md-12 mb-4 mb-3">
-
-                     <div class="card border-left-danger shadow py-4 mb-3">
-                        <div class="card-body">
-                           <div class="row no-gutters align-items-center">
-                              <div class="col mr-2">
-                                 <div class="
-                                       text-md
-                                       font-weight-bold
-                                       text-primary text-uppercase
-                                       mb-1
-                                       ">
-                                    PUI Users
-                                 </div>
-                                 <div class="row no-gutters align-items-center">
-                                    <div class="col-auto">
-                                       <div class="
-                                             h1
-                                             mb-0
-                                             mr-3
-                                             font-weight-bold
-                                             text-gray-800
-                                             ">
-                                          {{pui_user_count}}
-                                       </div>
-                                    </div>
-                                 </div>
-                              </div>
-                              <div class="col-auto">
-                                 <i class="fas fa-head-side-mask fa-3x text-gray-600"></i>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-
-                  </div>
-
                   <!-- Active User Table -->
                   <div class="col-xl-12">
                      <!-- Page Heading -->
-                     <h1 class="h3 mb-2 text-gray-800">Active User Dashboard
-                        <a href="/admin_history" class="btn btn-info floatRight"><i class="fas fa-history"></i></a>
-                     </h1>
-                     
+                     <h1 class="h3 mb-2 text-gray-800">History</h1>
 
                      <!-- DataTales Example -->
                      <div class="card shadow mb-4">
@@ -215,17 +117,17 @@
                                     </tr>
                                  </tfoot>
                                  <tbody>
-                                    {% for active in active_today %}
+                                    {% for logs in history %}
                                     <tr>
                                        <td>
-                                         <a href="{% url 'admin_user_info' active.contact_number %}"
-                                             style="color: #1597E5; text-decoration: none;">{{active.contact_number}}</a>
+                                         <a href="{% url 'admin_user_info' logs.contact_number %}"
+                                             style="color: #1597E5; text-decoration: none;">{{logs.contact_number}}</a>
                                        </td>
-                                       <td>{{active.full_name}}</td>
-                                       <td>{{active.branch}}</td>
-                                       <td>{{active.location}}</td>
-                                       <th>{{active.date}}</th>
-                                       <td>{{active.time_in}}</td>
+                                       <td>{{logs.full_name}}</td>
+                                       <td>{{logs.branch}}</td>
+                                       <td>{{logs.location}}</td>
+                                       <th>{{logs.date}}</th>
+                                       <td>{{logs.time_in}}</td>
                                     </tr>
                                     {% endfor %}
                                  </tbody>
